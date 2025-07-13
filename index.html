@@ -1,210 +1,446 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- Primary Meta Tags -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="DCIAFRICA provides free digital skills training to African youth in web development, graphic design, data science, and more. Join our movement to bridge the digital divide in Africa.">
+    <meta name="keywords" content="digital skills Africa, free tech training, coding bootcamp Africa, web development course, graphic design training, data science Africa">
+    <meta name="author" content="Digital Connect Institute Africa">
+    <meta name="theme-color" content="#0c1e59">
+    
+    <!-- Open Graph / Facebook Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://dciafrica.org/">
+    <meta property="og:title" content="DCIAFRICA – Free Digital Skills Training for African Youth">
+    <meta property="og:description" content="Empowering African youth with free digital skills training in web development, graphic design, data science and more. Join our movement today.">
+    <meta property="og:image" content="https://dciafrica.org/images/social-preview.jpg">
+    
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://dciafrica.org/">
+    <meta name="twitter:title" content="DCIAFRICA – Free Digital Skills Training for African Youth">
+    <meta name="twitter:description" content="Empowering African youth with free digital skills training in web development, graphic design, data science and more. Join our movement today.">
+    <meta name="twitter:image" content="https://dciafrica.org/images/social-preview.jpg">
+    
+    <!-- Favicon -->
     <link rel="shortcut icon" href="logo.png" type="image/x-icon">
-    <title>DCIAFRICA – Digital Connect Institute Africa</title>
+    <link rel="apple-touch-icon" href="logo.png">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://dciafrica.org/">
+    
+    <title>DCIAFRICA – Digital Connect Institute Africa | Free Digital Skills Training</title>
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="https://cdn.tailwindcss.com" as="script">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" as="style">
+    
+    <!-- CSS & Fonts -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "EducationalOrganization",
+      "name": "Digital Connect Institute Africa",
+      "alternateName": "DCIAFRICA",
+      "url": "https://dciafrica.org",
+      "logo": "https://dciafrica.org/logo.png",
+      "description": "Providing free digital skills training to African youth",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "Nigeria"
+      },
+      "sameAs": [
+        "https://twitter.com/dcinstitute3"
+      ]
+    }
+    </script>
 
     <style>
       body {
         font-family: 'Inter', sans-serif;
+        scroll-behavior: smooth;
+      }
+      
+      /* Hero animation */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      .animate-fade-in-up {
+        animation: fadeInUp 0.8s ease-out forwards;
+      }
+      
+      /* Card hover effect */
+      .skill-card {
+        transition: all 0.3s ease;
+        transform-style: preserve-3d;
+      }
+      
+      .skill-card:hover {
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      }
+      
+      /* Pulse animation for CTA */
+      @keyframes pulse {
+        0%, 100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+      }
+      
+      .animate-pulse {
+        animation: pulse 2s infinite;
+      }
+      
+      /* Gradient text */
+      .gradient-text {
+        background: linear-gradient(90deg, #fbbf24, #00b9ae);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
       }
     </style>
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-        />
-
   </head>
 
   <body class="bg-[#0c1e59] text-white">
     <!-- Header -->
-    <header class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+    <header class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center sticky top-0 z-50 bg-[#0c1e59]/90 backdrop-blur-sm">
       <div class="flex items-center space-x-3">
-        <img src="logo.png" alt="DCIA Logo" class="h-10 w-10" />
-        <span class="text-xl font-bold">DCIAFRICA</span>
+        <img src="logo.png" alt="DCIAFRICA Logo" class="h-12 w-12" loading="lazy" />
+        <span class="text-2xl font-bold gradient-text">DCIAFRICA</span>
       </div>
       <nav class="hidden md:flex space-x-8 text-sm">
-        <a href="#programs" class="hover:text-[#00b9ae]">Programs</a>
-        <a href="#volunteer" class="hover:text-[#00b9ae]">Volunteer</a>
-        <a href="#impact" class="hover:text-[#00b9ae]">Impact</a>
-        <a href="#contact" class="hover:text-[#00b9ae]">Contact</a>
+        <a href="#programs" class="hover:text-[#00b9ae] transition-colors duration-300">Programs</a>
+        <a href="#volunteer" class="hover:text-[#00b9ae] transition-colors duration-300">Volunteer</a>
+        <a href="#impact" class="hover:text-[#00b9ae] transition-colors duration-300">Impact</a>
+        <a href="#contact" class="hover:text-[#00b9ae] transition-colors duration-300">Contact</a>
+        <a href="hosting.html" class="hover:text-[#00b9ae] transition-colors duration-300">Start a Website</a>
       </nav>
+      <button class="md:hidden text-white focus:outline-none">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
     </header>
 
     <!-- Hero -->
-    <section class="relative text-center py-32 px-6">
-        <div class="hero-bg rounded-md"></div>
-
-
-      <div class="max-w-3xl mx-auto">
-        <h1 class="text-4xl md:text-5xl font-bold leading-tight mb-6">
-          Free Digital Skills for All
+    <section class=" relative text-center py-32 px-6 overflow-hidden">
+      <div class="absolute inset-0 bg-gradient-to-b from-[#0c1e59] to-[#0a183f] opacity-90 z-0"></div>
+      <div class="max-w-4xl mx-auto relative z-10 animate-fade-in-up">
+        <h1 class="text-4xl md:text-6xl font-bold leading-tight mb-6">
+          <span class="gradient-text">Free Digital Skills</span> for All Africans
         </h1>
-        <p class="text-lg md:text-xl mb-6">
-          <span class="text-[#fbbf24] font-semibold">“No African youth should be left behind in the digital age.”</span>
+        <p class="text-xl md:text-2xl mb-6">
+          <span class="text-[#fbbf24] font-semibold">"No African youth should be left behind in the digital age."</span>
         </p>
-        <p class="text-gray-200 mb-8">
-          DCIAFRICA is a revolutionary movement for free digital empowerment, volunteerism, innovation, and transformation. We are committed to uniting, training, and equipping millions of young minds across Africa with the essential power of the 21st century: <strong>Digital Skills</strong>.
+        <p class="text-gray-200 mb-8 text-lg max-w-3xl mx-auto">
+          DCIAFRICA is a revolutionary movement for free digital empowerment, volunteerism, innovation, and transformation. We are committed to uniting, training, and equipping millions of young minds across Africa with the essential power of the 21st century: <strong class="text-[#00b9ae]">Digital Skills</strong>.
         </p>
-        <a
-          href="#programs"
-          class="inline-block bg-[#fbbf24] text-[#0c1e59] font-semibold px-8 py-3 rounded-full hover:bg-[#e0a923] transition"
-        >
-          Explore Programs
-        </a>
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+          <a
+            href="#programs"
+            class="inline-block bg-[#fbbf24] hover:bg-[#e0a923] text-[#0c1e59] font-semibold px-8 py-4 rounded-full transition-all duration-300 transform hover:scale-105"
+          >
+            Explore Programs
+          </a>
+          <a
+            href="#contact"
+            class="inline-block border-2 border-[#00b9ae] hover:bg-[#00b9ae]/20 text-white font-semibold px-8 py-4 rounded-full transition-all duration-300 transform hover:scale-105"
+          >
+            Join Our Community
+          </a>
+        </div>
       </div>
     </section>
 
     <!-- Programs -->
     <section id="programs" class="bg-white text-[#0c1e59] py-24 px-6">
-      <div class="max-w-6xl mx-auto text-center">
-        <h2 class="text-3xl font-bold mb-4">Digital Skill Areas</h2>
-        <p class="text-lg text-gray-700 mb-12 max-w-xl mx-auto">
-          From beginners to advanced learners, we train in all major digital skill areas.
+      <div class="max-w-7xl mx-auto text-center">
+        <h2 class="text-4xl font-bold mb-4">Digital Skill Programs</h2>
+        <p class="text-xl text-gray-700 mb-16 max-w-3xl mx-auto">
+          Comprehensive training from beginner to advanced levels in high-demand digital skills
         </p>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-left">
-          <div class="bg-[#f9fafb] p-6 rounded-xl shadow hover:shadow-xl transition">
-            <h3 class="font-semibold text-lg mb-2">🎨 Graphic Design</h3>
-            <p class="text-sm text-gray-600">Create impactful visuals using modern design tools.</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-left">
+          <!-- Program Cards -->
+          <div class="skill-card bg-[#f9fafb] p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+            <div class="text-4xl mb-4 text-[#00b9ae]">🎨</div>
+            <h3 class="font-bold text-xl mb-3">Graphic Design</h3>
+            <p class="text-gray-600">Master industry tools like Adobe Photoshop, Illustrator, and Canva to create stunning visuals.</p>
           </div>
-          <div class="bg-[#f9fafb] p-6 rounded-xl shadow hover:shadow-xl transition">
-            <h3 class="font-semibold text-lg mb-2">💻 Web Development</h3>
-            <p class="text-sm text-gray-600">Build websites and apps using real-world technologies.</p>
+          
+          <div class="skill-card bg-[#f9fafb] p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+            <div class="text-4xl mb-4 text-[#00b9ae]">💻</div>
+            <h3 class="font-bold text-xl mb-3">Web Development</h3>
+            <p class="text-gray-600">Build responsive websites with HTML, CSS, JavaScript, and modern frameworks like React.</p>
           </div>
-          <div class="bg-[#f9fafb] p-6 rounded-xl shadow hover:shadow-xl transition">
-            <h3 class="font-semibold text-lg mb-2">🤖 Data Science & AI</h3>
-            <p class="text-sm text-gray-600">Unlock the power of data and artificial intelligence.</p>
+          
+          <div class="skill-card bg-[#f9fafb] p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+            <div class="text-4xl mb-4 text-[#00b9ae]">🤖</div>
+            <h3 class="font-bold text-xl mb-3">Data Science & AI</h3>
+            <p class="text-gray-600">Learn Python, machine learning, and data analysis to unlock insights from data.</p>
           </div>
-          <div class="bg-[#f9fafb] p-6 rounded-xl shadow hover:shadow-xl transition">
-            <h3 class="font-semibold text-lg mb-2">📈 Digital Marketing</h3>
-            <p class="text-sm text-gray-600">Master SEO, social media, email marketing & more.</p>
+          
+          <div class="skill-card bg-[#f9fafb] p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+            <div class="text-4xl mb-4 text-[#00b9ae]">📈</div>
+            <h3 class="font-bold text-xl mb-3">Digital Marketing</h3>
+            <p class="text-gray-600">Master SEO, social media marketing, email campaigns, and Google Analytics.</p>
           </div>
-          <div class="bg-[#f9fafb] p-6 rounded-xl shadow hover:shadow-xl transition">
-            <h3 class="font-semibold text-lg mb-2">🛡️ Cybersecurity</h3>
-            <p class="text-sm text-gray-600">Learn to protect systems, data, and digital identities.</p>
+          
+          <div class="skill-card bg-[#f9fafb] p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+            <div class="text-4xl mb-4 text-[#00b9ae]">🛡️</div>
+            <h3 class="font-bold text-xl mb-3">Cybersecurity</h3>
+            <p class="text-gray-600">Protect systems and data with ethical hacking, network security, and cryptography.</p>
           </div>
-          <div class="bg-[#f9fafb] p-6 rounded-xl shadow hover:shadow-xl transition">
-            <h3 class="font-semibold text-lg mb-2">🎬 Video Editing</h3>
-            <p class="text-sm text-gray-600">Edit, cut, and create professional-quality videos.</p>
-          </div>
-          <div class="bg-[#f9fafb] p-6 rounded-xl shadow hover:shadow-xl transition">
-            <h3 class="font-semibold text-lg mb-2">✍️ Content Creation</h3>
-            <p class="text-sm text-gray-600">Write, record, and publish powerful digital content.</p>
-          </div>
-          <div class="bg-[#f9fafb] p-6 rounded-xl shadow hover:shadow-xl transition">
-            <h3 class="font-semibold text-lg mb-2">👦 Coding for Kids & Teens</h3>
-            <p class="text-sm text-gray-600">Fun, hands-on learning for the next generation.</p>
-          </div>
-          <div class="bg-[#f9fafb] p-6 rounded-xl shadow hover:shadow-xl transition">
-            <h3 class="font-semibold text-lg mb-2">🌍 Freelancing & Remote Work</h3>
-            <p class="text-sm text-gray-600">Learn to earn from anywhere in the world.</p>
+          
+          <div class="skill-card bg-[#f9fafb] p-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
+            <div class="text-4xl mb-4 text-[#00b9ae]">🎬</div>
+            <h3 class="font-bold text-xl mb-3">Video Editing</h3>
+            <p class="text-gray-600">Edit professional videos with Adobe Premiere Pro, After Effects, and DaVinci Resolve.</p>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Volunteer Section -->
-    <section id="volunteer" class="py-20 px-6 text-center">
-      <div class="max-w-4xl mx-auto">
-        <h2 class="text-3xl font-bold mb-4 text-[#fbbf24]">Volunteerism: Giving Back, Growing Forward</h2>
-        <p class="text-lg text-gray-200 mb-8">
-          We believe in the spirit of Ubuntu—“I am because we are.” Become a force for good and growth across Africa.
+    <section id="volunteer" class="py-24 px-6 text-center bg-gradient-to-b from-[#0c1e59] to-[#0a183f]">
+      <div class="max-w-5xl mx-auto">
+        <h2 class="text-4xl font-bold mb-6 text-[#fbbf24]">Join Our Volunteer Network</h2>
+        <p class="text-xl text-gray-200 mb-12 max-w-3xl mx-auto">
+          We believe in the spirit of Ubuntu—"I am because we are." Become a force for good and growth across Africa.
         </p>
-        <div class="flex flex-wrap justify-center gap-4">
-          <span class="bg-[#3d6f4c] text-white px-4 py-2 rounded-full">Serve as Digital Ambassador</span>
-          <span class="bg-[#3d6f4c] text-white px-4 py-2 rounded-full">Train Others</span>
-          <span class="bg-[#3d6f4c] text-white px-4 py-2 rounded-full">Outreach to Rural Areas</span>
-          <span class="bg-[#3d6f4c] text-white px-4 py-2 rounded-full">Empower Girls & Underrepresented</span>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div class="bg-[#3d6f4c]/50 p-6 rounded-xl backdrop-blur-sm border border-[#3d6f4c]/30 hover:border-[#fbbf24] transition-all">
+            <h3 class="font-semibold text-lg mb-2">Digital Ambassador</h3>
+            <p class="text-gray-300">Represent DCIAFRICA in your community</p>
+          </div>
+          <div class="bg-[#3d6f4c]/50 p-6 rounded-xl backdrop-blur-sm border border-[#3d6f4c]/30 hover:border-[#fbbf24] transition-all">
+            <h3 class="font-semibold text-lg mb-2">Skills Trainer</h3>
+            <p class="text-gray-300">Teach digital skills to others</p>
+          </div>
+          <div class="bg-[#3d6f4c]/50 p-6 rounded-xl backdrop-blur-sm border border-[#3d6f4c]/30 hover:border-[#fbbf24] transition-all">
+            <h3 class="font-semibold text-lg mb-2">Rural Outreach</h3>
+            <p class="text-gray-300">Bring digital skills to underserved areas</p>
+          </div>
+          <div class="bg-[#3d6f4c]/50 p-6 rounded-xl backdrop-blur-sm border border-[#3d6f4c]/30 hover:border-[#fbbf24] transition-all">
+            <h3 class="font-semibold text-lg mb-2">Women Empowerment</h3>
+            <p class="text-gray-300">Support girls in tech initiatives</p>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- Impact Section -->
-    <section id="impact" class="bg-white text-[#0c1e59] py-20 px-6">
-      <div class="max-w-5xl mx-auto text-center">
-        <h2 class="text-3xl font-bold mb-4">Empowering the Future of Africa</h2>
-        <p class="text-lg text-gray-700 mb-6">
-          Through our programs, African youths are:
-        </p>
-        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mx-auto text-left text-gray-700">
-          <li>✅ Equipped with entrepreneurial skills</li>
-          <li>✅ Mentored to turn their ideas into reality</li>
-          <li>✅ Connected to global opportunities</li>
-          <li>✅ Inspired to become community leaders</li>
-        </ul>
+    <section id="impact" class="bg-white text-[#0c1e59] py-24 px-6">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl font-bold mb-4">Our Impact Across Africa</h2>
+          <p class="text-xl text-gray-700 max-w-3xl mx-auto">
+            Through our programs, African youths are transforming their futures
+          </p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="text-center p-8 rounded-xl bg-[#f9fafb]">
+            <div class="text-5xl font-bold text-[#00b9ae] mb-4">1,000+</div>
+            <h3 class="text-xl font-semibold mb-2">Youths Trained</h3>
+            <p class="text-gray-600">Across 15 African countries</p>
+          </div>
+          
+          <div class="text-center p-8 rounded-xl bg-[#f9fafb]">
+            <div class="text-5xl font-bold text-[#fbbf24] mb-4">85%</div>
+            <h3 class="text-xl font-semibold mb-2">Employment Rate</h3>
+            <p class="text-gray-600">Of graduates find work within 6 months</p>
+          </div>
+          
+          <div class="text-center p-8 rounded-xl bg-[#f9fafb]">
+            <div class="text-5xl font-bold text-[#0c1e59] mb-4">200+</div>
+            <h3 class="text-xl font-semibold mb-2">Community Hubs</h3>
+            <p class="text-gray-600">Providing access to digital resources</p>
+          </div>
+        </div>
       </div>
     </section>
 
     <!-- CTA -->
-     <section class="bg-[#00b9ae] text-[#0c1e59] py-20 px-6 text-center">
-      <h2 class="text-3xl font-bold mb-4">Join the Movement</h2>
-      <p class="mb-6 max-w-lg mx-auto">
-        Whether you're ready to learn, teach, or empower others, DCIAFRICA welcomes you.
-      </p>
-      <a
-        href="#contact"
-        class="bg-[#fbbf24] text-[#0c1e59] font-semibold px-8 py-3 rounded-full hover:bg-[#e0a923] transition"
-      >
-        Get Involved Now
-      </a>
-    </section>
-
-
-    <!-- Contact Section -->
-     <section id="contact" class="py-20 px-6 bg-[#0c1e59] text-white">
-  <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-start">
-    <!-- Text content -->
-    <div>
-      <h2 class="text-3xl font-bold mb-4 text-[#fbbf24]">Contact Us</h2>
-      <p class="text-lg text-gray-300 mb-8 max-w-md">
-        Let’s connect! Reach us via phone/whatsapp or any of our social platforms.
-      </p>
-
-      <div class="space-y-4 text-lg">
-        <div>
-          <p class="font-semibold">📞 Phone 1:</p>
-          <a href="tel:+2347037911921" class="text-[#00b9ae] hover:underline block">+234 703 7911 921</a>
-        </div>
-        <div>
-          <p class="font-semibold">📞 Phone 2:</p>
-          <a href="tel:+2347042807707" class="text-[#00b9ae] hover:underline block">+234 704 2807 707</a>
+    <section class="bg-gradient-to-r from-[#00b9ae] to-[#0c8a82] text-white py-24 px-6 text-center">
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-4xl font-bold mb-6">Ready to Transform Your Future?</h2>
+        <p class="text-xl mb-8 max-w-2xl mx-auto">
+          Whether you're ready to learn, teach, or empower others, DCIAFRICA welcomes you.
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+          <a
+            href="#contact"
+            class="inline-block bg-[#fbbf24] hover:bg-[#e0a923] text-[#0c1e59] font-semibold px-8 py-4 rounded-full transition-all duration-300 transform hover:scale-105 animate-pulse"
+          >
+            Get Involved Now
+          </a>
+          <a
+            href="#programs"
+            class="inline-block border-2 border-white hover:bg-white/10 text-white font-semibold px-8 py-4 rounded-full transition-all duration-300 transform hover:scale-105"
+          >
+            View All Programs
+          </a>
         </div>
       </div>
-    </div>
-
-    <!-- Social links -->
-    <div class="flex md:justify-end justify-start items-start gap-6 text-2xl mt-8 md:mt-0">
-      <a href="https://x.com/dcinstitute3" target="_blank" class="hover:text-[#00b9ae] transition" aria-label="Twitter">
-        <i class="fab fa-twitter"></i>
-      </a>
-      <a href="#" target="_blank" class="hover:text-[#00b9ae] transition" aria-label="Facebook">
-        <i class="fab fa-facebook"></i>
-      </a>
-      <a href="#" target="_blank" class="hover:text-[#00b9ae] transition" aria-label="Instagram">
-        <i class="fab fa-instagram"></i>
-      </a>
-      <a href="#" target="_blank" class="hover:text-[#00b9ae] transition" aria-label="LinkedIn">
-        <i class="fab fa-linkedin"></i>
-      </a>
-        </div>
-    </div>
     </section>
 
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 px-6 bg-[#0c1e59] text-white">
+      <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+        <!-- Text content -->
+        <div>
+          <h2 class="text-4xl font-bold mb-6 text-[#fbbf24]">Contact Us</h2>
+          <p class="text-xl text-gray-300 mb-8">
+            Let's connect! Reach us via phone/whatsapp or any of our social platforms.
+          </p>
 
+          <div class="space-y-6">
+            <div>
+              <h3 class="font-semibold text-lg mb-2">📞 Phone Numbers:</h3>
+              <a href="tel:+2347037911921" class="text-[#00b9ae] hover:underline block text-lg">+234 703 7911 921</a>
+              <a href="tel:+2347042807707" class="text-[#00b9ae] hover:underline block text-lg">+234 704 2807 707</a>
+            </div>
+            
+            <div>
+              <h3 class="font-semibold text-lg mb-2">✉️ Email:</h3>
+              <a href="mailto:info@dciafrica.org" class="text-[#00b9ae] hover:underline block text-lg">info@dciafrica.org</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Social links -->
+        <div class="space-y-8">
+          <h3 class="text-2xl font-semibold">Connect With Us</h3>
+          <div class="flex flex-wrap gap-6 text-3xl">
+            <a href="https://x.com/dcinstitute3" target="_blank" rel="noopener noreferrer" class="hover:text-[#00b9ae] transition-colors duration-300" aria-label="Twitter">
+              <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#" target="_blank" rel="noopener noreferrer" class="hover:text-[#00b9ae] transition-colors duration-300" aria-label="Facebook">
+              <i class="fab fa-facebook"></i>
+            </a>
+            <a href="#" target="_blank" rel="noopener noreferrer" class="hover:text-[#00b9ae] transition-colors duration-300" aria-label="Instagram">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#" target="_blank" rel="noopener noreferrer" class="hover:text-[#00b9ae] transition-colors duration-300" aria-label="LinkedIn">
+              <i class="fab fa-linkedin"></i>
+            </a>
+            <a href="#" target="_blank" rel="noopener noreferrer" class="hover:text-[#00b9ae] transition-colors duration-300" aria-label="YouTube">
+              <i class="fab fa-youtube"></i>
+            </a>
+          </div>
+          
+          <div>
+            <h3 class="text-xl font-semibold mb-4">Newsletter Signup</h3>
+            <form class="flex flex-col sm:flex-row gap-2 max-w-md">
+              <input type="email" placeholder="Your email address" class="flex-grow px-4 py-3 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-[#00b9ae]">
+              <button type="submit" class="bg-[#00b9ae] hover:bg-[#00857a] text-white font-semibold px-6 py-3 rounded-lg transition-colors duration-300">
+                Subscribe
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <!-- Footer -->
-    <footer class="bg-[#0c1e59] text-white text-center py-6 border-t border-[#3d6f4c]">
-      <p class="text-sm">
-        &copy; 2025 Digital Connect Institute Africa (DCIAFRICA). All rights reserved.
-      </p>
+    <footer class="bg-[#0a183f] text-white py-12 px-6 border-t border-[#3d6f4c]">
+      <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div>
+          <div class="flex items-center space-x-3 mb-4">
+            <img src="logo.png" alt="DCIAFRICA Logo" class="h-10 w-10" loading="lazy" />
+            <span class="text-xl font-bold gradient-text">DCIAFRICA</span>
+          </div>
+          <p class="text-gray-300">Digitalizing the minds of Africans.</p>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+          <ul class="space-y-2">
+            <li><a href="#programs" class="text-gray-300 hover:text-[#00b9ae] transition-colors">Programs</a></li>
+            <li><a href="#volunteer" class="text-gray-300 hover:text-[#00b9ae] transition-colors">Volunteer</a></li>
+            <li><a href="#impact" class="text-gray-300 hover:text-[#00b9ae] transition-colors">Our Impact</a></li>
+            <li><a href="#contact" class="text-gray-300 hover:text-[#00b9ae] transition-colors">Contact</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-semibold mb-4">Programs</h3>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-gray-300 hover:text-[#00b9ae] transition-colors">Web Development</a></li>
+            <li><a href="#" class="text-gray-300 hover:text-[#00b9ae] transition-colors">Graphic Design</a></li>
+            <li><a href="#" class="text-gray-300 hover:text-[#00b9ae] transition-colors">Data Science</a></li>
+            <li><a href="#" class="text-gray-300 hover:text-[#00b9ae] transition-colors">Digital Marketing</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h3 class="text-lg font-semibold mb-4">Legal</h3>
+          <ul class="space-y-2">
+            <li><a href="#" class="text-gray-300 hover:text-[#00b9ae] transition-colors">Privacy Policy</a></li>
+            <li><a href="#" class="text-gray-300 hover:text-[#00b9ae] transition-colors">Terms of Service</a></li>
+            <li><a href="#" class="text-gray-300 hover:text-[#00b9ae] transition-colors">Cookie Policy</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="max-w-7xl mx-auto pt-8 mt-8 border-t border-[#3d6f4c]/30 text-center text-gray-400">
+        <p>&copy; 2025 Digital Connect Institute Africa (DCIAFRICA). All rights reserved.</p>
+      </div>
     </footer>
+
+    <!-- Back to top button -->
+    <button id="back-to-top" class="fixed bottom-8 right-8 bg-[#00b9ae] text-white p-3 rounded-full shadow-lg opacity-0 invisible transition-all duration-300 hover:bg-[#00857a]">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+      </svg>
+    </button>
+
+    <script>
+      // Back to top button functionality
+      const backToTopButton = document.getElementById('back-to-top');
+      
+      window.addEventListener('scroll', () => {
+        if (window.pageYOffset > 300) {
+          backToTopButton.classList.remove('opacity-0', 'invisible');
+          backToTopButton.classList.add('opacity-100', 'visible');
+        } else {
+          backToTopButton.classList.remove('opacity-100', 'visible');
+          backToTopButton.classList.add('opacity-0', 'invisible');
+        }
+      });
+      
+      backToTopButton.addEventListener('click', () => {
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+      });
+      
+      // Mobile menu toggle would go here
+    </script>
   </body>
 </html>
