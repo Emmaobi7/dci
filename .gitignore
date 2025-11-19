@@ -4,3 +4,7 @@ node_modules/
 
 firestore.rules
 *.rules
+
+env
+.env
+.env.*
