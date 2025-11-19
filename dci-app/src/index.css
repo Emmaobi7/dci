@@ -1,0 +1,203 @@
+@import 'tailwindcss';
+
+/* DCIAFRICA Theme Configuration for Tailwind CSS v4 */
+@theme {
+  /* Primary colors */
+  --color-primary-50: #f0f4ff;
+  --color-primary-100: #e0eaff;
+  --color-primary-200: #c7d8ff;
+  --color-primary-300: #a4bcff;
+  --color-primary-400: #8196ff;
+  --color-primary-500: #6366f1;
+  --color-primary-600: #4f46e5;
+  --color-primary-700: #4338ca;
+  --color-primary-800: #3730a3;
+  --color-primary-900: #0c1e59;
+  --color-primary-950: #0a183f;
+  
+  /* Secondary/Teal colors */
+  --color-secondary-50: #f0fdfa;
+  --color-secondary-100: #ccfbf1;
+  --color-secondary-200: #99f6e4;
+  --color-secondary-300: #5eead4;
+  --color-secondary-400: #2dd4bf;
+  --color-secondary-500: #00b9ae;
+  --color-secondary-600: #00857a;
+  --color-secondary-700: #0f766e;
+  --color-secondary-800: #115e59;
+  --color-secondary-900: #134e4a;
+  --color-secondary-950: #042f2e;
+  
+  /* Accent/Yellow colors */
+  --color-accent-50: #fffbeb;
+  --color-accent-100: #fef3c7;
+  --color-accent-200: #fde68a;
+  --color-accent-300: #fcd34d;
+  --color-accent-400: #fbbf24;
+  --color-accent-500: #f59e0b;
+  --color-accent-600: #e0a923;
+  --color-accent-700: #b45309;
+  --color-accent-800: #92400e;
+  --color-accent-900: #78350f;
+  --color-accent-950: #451a03;
+  
+  /* Font families */
+  --font-family-primary: 'Inter', system-ui, sans-serif;
+  --font-family-inter: 'Inter', system-ui, sans-serif;
+}
+
+/* Global Styles */
+
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  line-height: 1.6;
+  color: white;
+  background: linear-gradient(to bottom, #0c1e59, #0a183f);
+  min-height: 100vh;
+}
+
+/* Custom Utility Classes */
+.gradient-text {
+  background: linear-gradient(90deg, #fbbf24, #00b9ae);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.bg-gradient-primary {
+  background: linear-gradient(90deg, #fbbf24, #00b9ae);
+}
+
+.bg-gradient-dark {
+  background: linear-gradient(to bottom, #0c1e59, #0a183f);
+}
+
+.bg-gradient-teal {
+  background: linear-gradient(to right, #00b9ae, #00857a);
+}
+
+/* Glass morphism effect */
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Custom animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.animate-pulse-slow {
+  animation: pulse 2s infinite;
+}
+
+.animate-pulse-fast {
+  animation: pulse 0.5s infinite;
+}
+
+/* Button hover effects */
+.btn-hover-scale {
+  transition: all 0.3s ease;
+}
+
+.btn-hover-scale:hover {
+  transform: scale(1.05);
+}
+
+/* Card hover effects */
+.card-hover {
+  transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a183f;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #00b9ae;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #00857a;
+}
+
+/* Focus styles */
+button:focus,
+input:focus,
+textarea:focus,
+select:focus {
+  outline: 2px solid #00b9ae;
+  outline-offset: 2px;
+}
+
+/* Selection styles */
+::selection {
+  background-color: #fbbf24;
+  color: #0c1e59;
+}
+
+/* Custom styles that were in your <style> tag */
+body {
+  font-family: 'Inter', sans-serif;
+  scroll-behavior: smooth;
+}
+
+/* Gradient text utility */
+.text-gradient {
+  background: linear-gradient(90deg, #ff6b6b, #f06595, #f8a5c2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Animation styles */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
