@@ -14,9 +14,23 @@ export const sampleCourses = [
     status: 'published',
     tags: ['React', 'JavaScript', 'Frontend'],
     modules: [
-      { id: 1, title: 'React Hooks Deep Dive', description: 'Advanced hooks patterns' },
-      { id: 2, title: 'Context and State Management', description: 'Managing complex state' },
-      { id: 3, title: 'Performance Optimization', description: 'Making React fast' }
+      {
+        id: 'mod-1',
+        title: 'React Hooks Deep Dive',
+        description: 'Advanced hooks patterns',
+        lessons: [
+          { id: 'les-1', title: 'useState & useEffect', type: 'video', duration: '15 mins' },
+          { id: 'les-2', title: 'useMemo & useCallback', type: 'video', duration: '20 mins' }
+        ]
+      },
+      {
+        id: 'mod-2',
+        title: 'Context and State Management',
+        description: 'Managing complex state',
+        lessons: [
+          { id: 'les-3', title: 'Context API Basics', type: 'text', duration: '10 mins' }
+        ]
+      }
     ],
     createdAt: new Date('2024-01-15'),
     updatedAt: new Date('2024-01-20')
@@ -35,9 +49,23 @@ export const sampleCourses = [
     status: 'published',
     tags: ['Python', 'Data Science', 'ML'],
     modules: [
-      { id: 1, title: 'Python Basics', description: 'Variables, functions, and control flow' },
-      { id: 2, title: 'NumPy and Pandas', description: 'Data manipulation libraries' },
-      { id: 3, title: 'Data Visualization', description: 'Creating charts and graphs' }
+      {
+        id: 'mod-3',
+        title: 'Python Basics',
+        description: 'Variables, functions, and control flow',
+        lessons: [
+          { id: 'les-4', title: 'Hello World & Variables', type: 'video', duration: '10 mins' },
+          { id: 'les-5', title: 'Loops & If statements', type: 'video', duration: '20 mins' }
+        ]
+      },
+      {
+        id: 'mod-4',
+        title: 'NumPy and Pandas',
+        description: 'Data manipulation libraries',
+        lessons: [
+          { id: 'les-6', title: 'Introduction to NumPy', type: 'video', duration: '15 mins' }
+        ]
+      }
     ],
     createdAt: new Date('2024-02-01'),
     updatedAt: new Date('2024-02-05')
@@ -56,9 +84,22 @@ export const sampleCourses = [
     status: 'published',
     tags: ['Design', 'UI', 'UX', 'Figma'],
     modules: [
-      { id: 1, title: 'Design Principles', description: 'Color, typography, layout' },
-      { id: 2, title: 'User Research', description: 'Understanding user needs' },
-      { id: 3, title: 'Prototyping', description: 'Creating interactive mockups' }
+      {
+        id: 'mod-5',
+        title: 'Design Principles',
+        description: 'Color, typography, layout',
+        lessons: [
+          { id: 'les-7', title: 'Visual Hierarchy', type: 'video', duration: '12 mins' }
+        ]
+      },
+      {
+        id: 'mod-6',
+        title: 'User Research',
+        description: 'Understanding user needs',
+        lessons: [
+          { id: 'les-8', title: 'Interviewing Users', type: 'video', duration: '25 mins' }
+        ]
+      }
     ],
     createdAt: new Date('2024-01-10'),
     updatedAt: new Date('2024-01-25')
@@ -75,7 +116,7 @@ export const sampleUsers = [
     createdAt: new Date('2024-01-01')
   },
   {
-    uid: 'instructor-2', 
+    uid: 'instructor-2',
     email: 'jane@example.com',
     displayName: 'Jane Smith',
     role: 'instructor',

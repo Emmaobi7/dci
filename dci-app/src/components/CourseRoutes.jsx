@@ -1,8 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useCourses } from '../contexts/CourseContext';
+import { useUser } from '../contexts/UserContext';
 import CourseManagement from './CourseManagement';
 import CourseLearning from './CourseLearning';
+import AdminCourseDetail from './AdminCourseDetail';
 
 const useCourse = (courseId) => {
   const { courses, getCourseById } = useCourses();
@@ -87,6 +89,8 @@ export const CourseLearningRoute = () => {
   const { courseId } = useParams();
   const navigate = useNavigate();
   const { course, loading } = useCourse(courseId);
+  const { userProfile } = useUser();
+
   const handleBack = () => {
     if (window.history.length > 1) {
       navigate(-1);
@@ -97,6 +101,16 @@ export const CourseLearningRoute = () => {
 
   if (loading) return <LoadingState label="Loading course content..." />;
   if (!course) return <NotFoundState />;
+
+  // Redirect admins to the inspection view
+  if (userProfile?.role === 'admin') {
+    return (
+      <AdminCourseDetail
+        course={course}
+        onBack={handleBack}
+      />
+    );
+  }
 
   return (
     <CourseLearning

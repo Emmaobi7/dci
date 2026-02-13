@@ -10,6 +10,17 @@ const ModuleEditor = ({ module, isOpen, onClose, onSave, isEditing = false }) =>
   });
   const [saving, setSaving] = useState(false);
 
+  // Sync state when module prop changes (important for modal reuse)
+  React.useEffect(() => {
+    if (isOpen) {
+      setModuleData({
+        title: module?.title || '',
+        description: module?.description || '',
+        lessons: module?.lessons || []
+      });
+    }
+  }, [module, isOpen]);
+
   if (!isOpen) return null;
 
   const handleLessonChange = (index, field, value) => {

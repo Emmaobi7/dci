@@ -30,14 +30,16 @@ export const UserProvider = ({ children }) => {
     console.log('UserContext: Setting up profile for user:', user.uid);
 
     const userRef = doc(db, 'users', user.uid);
-    
+
     const unsubscribe = onSnapshot(userRef, async (docSnap) => {
       try {
         if (docSnap.exists()) {
           const profile = docSnap.data();
           console.log('UserContext: Loaded profile from Firestore:', profile);
+          const enrolled = profile.enrolledCourses || [];
+          console.log('UserContext: Enrolled courses for UI:', enrolled);
           setUserProfile(profile);
-          setEnrolledCourses(profile.enrolledCourses || []);
+          setEnrolledCourses(enrolled);
         } else {
           // Create new user profile
           const newProfile = {
@@ -50,7 +52,7 @@ export const UserProvider = ({ children }) => {
             createdAt: new Date().toISOString(),
             lastUpdated: new Date().toISOString(),
           };
-          
+
           await setDoc(userRef, newProfile);
           console.log('UserContext: Created new profile:', newProfile);
           setUserProfile(newProfile);
@@ -68,14 +70,14 @@ export const UserProvider = ({ children }) => {
 
   const updateUserProfile = async (updates) => {
     if (!user || !userProfile) throw new Error('User not authenticated');
-    
+
     try {
       const userRef = doc(db, 'users', user.uid);
       const updatedData = {
         ...updates,
         lastUpdated: new Date().toISOString(),
       };
-      
+
       await updateDoc(userRef, updatedData);
       console.log('UserContext: Profile updated:', updatedData);
     } catch (error) {
@@ -86,7 +88,7 @@ export const UserProvider = ({ children }) => {
 
   const enrollInCourse = async (courseId) => {
     if (!user || !userProfile) throw new Error('User not authenticated');
-    
+
     try {
       const updatedCourses = [...(userProfile.enrolledCourses || [])];
       if (!updatedCourses.includes(courseId)) {
@@ -101,21 +103,21 @@ export const UserProvider = ({ children }) => {
 
   const updateProgress = async (courseId, lessonId, completed = true) => {
     if (!user || !userProfile) throw new Error('User not authenticated');
-    
+
     try {
       const currentProgress = userProfile.progress || {};
       const courseProgress = currentProgress[courseId] || {};
-      
+
       courseProgress[lessonId] = {
         completed,
         completedAt: completed ? new Date().toISOString() : null,
       };
-      
+
       const updatedProgress = {
         ...currentProgress,
         [courseId]: courseProgress
       };
-      
+
       await updateUserProfile({ progress: updatedProgress });
     } catch (error) {
       console.error('Error updating progress:', error);
@@ -124,7 +126,12 @@ export const UserProvider = ({ children }) => {
   };
 
   const isEnrolled = (courseId) => {
-    return enrolledCourses.includes(courseId);
+    const enrolled = enrolledCourses.includes(courseId);
+    if (!enrolled && userProfile?.enrolledCourses?.includes(courseId)) {
+      console.warn('UserContext: State mismatch found for course:', courseId);
+      return true;
+    }
+    return enrolled;
   };
 
   const hasRole = (role) => {
@@ -133,7 +140,7 @@ export const UserProvider = ({ children }) => {
 
   const updateUserProgress = async (courseId, progressData) => {
     if (!user || !userProfile) throw new Error('User not authenticated');
-    
+
     try {
       // Save progress to user profile in Firebase
       const currentProgress = userProfile.courseProgress || {};

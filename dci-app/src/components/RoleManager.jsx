@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { formatDate } from '../utils/formatters';
 import { doc, updateDoc, collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../firebase';
 import { useAuth } from '../contexts/AuthContext';
@@ -56,9 +57,9 @@ const RoleManager = () => {
         collection(db, 'users'),
         where('email', '==', searchEmail.trim().toLowerCase())
       );
-      
+
       const snapshot = await getDocs(usersQuery);
-      
+
       if (!snapshot.empty) {
         const userDoc = snapshot.docs[0];
         setFoundUser({
@@ -89,7 +90,7 @@ const RoleManager = () => {
       });
 
       setMessage(`✅ Role updated to ${newRole} for ${userEmail}!`);
-      
+
       // Update found user if it was the one being updated
       if (foundUser && foundUser.id === userId) {
         setFoundUser({
@@ -97,10 +98,10 @@ const RoleManager = () => {
           role: newRole
         });
       }
-      
+
       // Refresh all users list
       await loadAllUsers();
-      
+
       setTimeout(() => setMessage(''), 5000);
     } catch (error) {
       console.error('Error updating role:', error);
@@ -127,7 +128,7 @@ const RoleManager = () => {
         <FaUserCog className="mr-2" />
         USER ROLE MANAGEMENT (ADMIN ONLY)
       </h3>
-      
+
       {/* Platform Stats */}
       <div className="grid grid-cols-3 gap-4 mb-6">
         <div className="bg-gray-700 rounded-lg p-3 text-center">
@@ -150,7 +151,7 @@ const RoleManager = () => {
           <FaSearch className="mr-2" />
           SEARCH USER BY EMAIL
         </h4>
-        
+
         <div className="flex space-x-2">
           <Input
             value={searchEmail}
@@ -175,12 +176,12 @@ const RoleManager = () => {
             <div className="space-y-2 text-sm">
               <div><strong>Email:</strong> {foundUser.email}</div>
               <div><strong>Name:</strong> {foundUser.displayName || 'Not set'}</div>
-              <div><strong>Current Role:</strong> 
+              <div><strong>Current Role:</strong>
                 <span className="text-teal-400 ml-2 font-mono">
                   {foundUser.role?.toUpperCase() || 'STUDENT'}
                 </span>
               </div>
-              <div><strong>Joined:</strong> {new Date(foundUser.createdAt).toLocaleDateString()}</div>
+              <div><strong>Joined:</strong> {formatDate(foundUser.createdAt)}</div>
             </div>
 
             <div className="mt-4">
@@ -191,11 +192,10 @@ const RoleManager = () => {
                     key={role.value}
                     onClick={() => updateUserRole(foundUser.id, role.value, foundUser.email)}
                     disabled={updating || foundUser.role === role.value}
-                    className={`text-xs ${
-                      foundUser.role === role.value
+                    className={`text-xs ${foundUser.role === role.value
                         ? 'bg-green-600 text-white cursor-not-allowed'
                         : 'bg-gray-600 hover:bg-gray-500 text-white'
-                    }`}
+                      }`}
                   >
                     {foundUser.role === role.value ? (
                       <>
@@ -224,7 +224,7 @@ const RoleManager = () => {
                 <div>
                   <div className="text-white font-mono text-sm">{user.email}</div>
                   <div className="text-gray-400 text-xs">
-                    {user.displayName || 'No name'} • 
+                    {user.displayName || 'No name'} •
                     <span className="text-teal-400 ml-1">
                       {user.role?.toUpperCase() || 'STUDENT'}
                     </span>
@@ -245,11 +245,10 @@ const RoleManager = () => {
         </div>
 
         {message && (
-          <div className={`p-3 rounded text-sm font-mono ${
-            message.includes('✅') 
-              ? 'bg-green-900 text-green-300 border border-green-600' 
+          <div className={`p-3 rounded text-sm font-mono ${message.includes('✅')
+              ? 'bg-green-900 text-green-300 border border-green-600'
               : 'bg-red-900 text-red-300 border border-red-600'
-          }`}>
+            }`}>
             {message}
           </div>
         )}

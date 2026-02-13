@@ -1,13 +1,14 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useCallback } from 'react';
 import { Outlet, useLocation, useNavigate, useOutletContext } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useUser } from '../contexts/UserContext';
 import { useCourses } from '../contexts/CourseContext';
-import { Button, Logo, CourseCatalog, CreateCourse, RoleManager, AdminCourseManager, PaymentModal, EnrollmentSuccess, AdminBootstrap } from './index';
+import { Button, Logo, CourseCatalog, CreateCourse, RoleManager, AdminCourseManager, PaymentModal, EnrollmentSuccess, AdminBootstrap, FirebaseDataSeeder, FirebaseDataCleaner, AdminDashboard } from './index';
 import { FaSignOutAlt, FaUser, FaBook, FaChartLine, FaPlus, FaUsers, FaArrowLeft } from 'react-icons/fa';
 
 const buildStats = ({ currentRole, myCourses, courses, enrolledCourses }) => {
   if (currentRole === 'instructor') {
+    const totalRevenue = myCourses.reduce((acc, course) => acc + ((course.totalStudents || 0) * (course.price || 0)), 0);
     return [
       { title: 'My Courses', value: myCourses.length, icon: FaBook, color: 'bg-teal-500' },
       {
@@ -16,15 +17,16 @@ const buildStats = ({ currentRole, myCourses, courses, enrolledCourses }) => {
         icon: FaUsers,
         color: 'bg-blue-500'
       },
-      { title: 'Revenue', value: '₦0', icon: FaChartLine, color: 'bg-green-500' }
+      { title: 'Revenue', value: `₦${totalRevenue.toLocaleString()}`, icon: FaChartLine, color: 'bg-green-500' }
     ];
   }
 
   if (currentRole === 'admin') {
+    const platformRevenue = courses.reduce((acc, course) => acc + ((course.totalStudents || 0) * (course.price || 0)), 0);
     return [
       { title: 'Total Courses', value: courses.length, icon: FaBook, color: 'bg-purple-500' },
-      { title: 'Total Users', value: '0', icon: FaUsers, color: 'bg-blue-500' },
-      { title: 'Platform Revenue', value: '₦0', icon: FaChartLine, color: 'bg-green-500' }
+      { title: 'Total Enrollments', value: courses.reduce((acc, c) => acc + (c.totalStudents || 0), 0), icon: FaUsers, color: 'bg-blue-500' },
+      { title: 'Platform Revenue', value: `₦${platformRevenue.toLocaleString()}`, icon: FaChartLine, color: 'bg-green-500' }
     ];
   }
 
@@ -86,28 +88,37 @@ const Dashboard = () => {
     }
   };
 
-  const handleEnrollCourse = (course) => {
+  const handleEnrollCourse = useCallback((course) => {
     if (isEnrolled(course.id)) {
       alert('You are already enrolled in this course!');
       return;
     }
     setPaymentModal({ isOpen: true, course });
-  };
+  }, [isEnrolled]);
 
-  const handlePaymentSuccess = async () => {
+  const handlePaymentSuccess = useCallback(async () => {
     const course = paymentModal.course;
     if (!course) return;
 
+    console.warn('Dashboard: handlePaymentSuccess triggered for:', course.title);
+
+    // Immediately close payment modal to give user instant feedback
+    setPaymentModal({ isOpen: false, course: null });
+
     try {
-      setPaymentModal({ isOpen: false, course: null });
+      // Background enrollment process
+      // enrollStudent handles everything (Course list, User list, and progress)
       await enrollStudent(course.id, user.uid);
-      await enrollInCourse(course.id);
+
+      console.log('Dashboard: Enrollment background process complete');
+
+      // Show success modal after background processes complete
       setSuccessModal({ isOpen: true, course });
     } catch (error) {
       console.error('Error completing enrollment:', error);
-      alert('Enrollment failed. Please try again.');
+      alert('Enrollment failed. Please contact support if you have been debited.');
     }
-  };
+  }, [paymentModal.course, enrollStudent, user.uid]);
 
   const handleStartCourse = () => {
     if (!successModal.course) return;
@@ -150,6 +161,10 @@ const Dashboard = () => {
     handleCreateCourse,
     isCreatingCourse
   };
+
+  if (currentRole === 'admin') {
+    return <AdminDashboard />;
+  }
 
   return (
     <div className="min-h-screen bg-gray-900">
@@ -194,11 +209,10 @@ const Dashboard = () => {
                 <button
                   key={link.path}
                   onClick={() => goTo(link.path)}
-                  className={`px-4 py-2 rounded-full font-mono text-xs sm:text-sm tracking-wider transition-colors border ${
-                    location.pathname === link.path
-                      ? 'bg-teal-500/20 border-teal-400 text-teal-300'
-                      : 'border-transparent text-gray-400 hover:text-white hover:border-gray-600'
-                  }`}
+                  className={`px-4 py-2 rounded-full font-mono text-xs sm:text-sm tracking-wider transition-colors border ${location.pathname === link.path
+                    ? 'bg-teal-500/20 border-teal-400 text-teal-300'
+                    : 'border-transparent text-gray-400 hover:text-white hover:border-gray-600'
+                    }`}
                 >
                   {link.label}
                 </button>
@@ -271,6 +285,13 @@ export const DashboardHome = () => {
       <AdminBootstrap />
       {currentRole === 'admin' && <RoleManager />}
       {currentRole === 'admin' && <AdminCourseManager />}
+
+      {currentRole === 'admin' && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+          <FirebaseDataSeeder />
+          <FirebaseDataCleaner />
+        </div>
+      )}
 
       <div className="mb-12">
         <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-teal-400 to-blue-500 mb-4 font-mono tracking-wider">

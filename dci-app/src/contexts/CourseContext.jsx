@@ -1,16 +1,17 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { 
-  collection, 
-  doc, 
-  getDocs, 
-  getDoc, 
-  addDoc, 
-  updateDoc, 
-  deleteDoc, 
+import {
+  collection,
+  doc,
+  getDocs,
+  getDoc,
+  addDoc,
+  setDoc,
+  updateDoc,
+  deleteDoc,
   onSnapshot,
   query,
   where,
-  orderBy 
+  orderBy
 } from 'firebase/firestore';
 import { db } from '../firebase';
 import { useAuth } from './AuthContext';
@@ -61,7 +62,7 @@ export const CourseProvider = ({ children }) => {
     // Simplified query to avoid index requirement
     const unsubscribe = onSnapshot(
       query(
-        collection(db, 'courses'), 
+        collection(db, 'courses'),
         where('instructorId', '==', user.uid)
       ),
       (snapshot) => {
@@ -80,7 +81,7 @@ export const CourseProvider = ({ children }) => {
 
   const createCourse = async (courseData) => {
     if (!user) throw new Error('User not authenticated');
-    
+
     try {
       const newCourse = {
         ...courseData,
@@ -93,9 +94,9 @@ export const CourseProvider = ({ children }) => {
         updatedAt: new Date(),
         status: 'published', // Auto-publish for testing (change to 'draft' for production)
       };
-      
-      const docRef = await addDoc(collection(db, 'courses'), newCourse);
-      return { id: docRef.id, ...newCourse };
+
+      await setDoc(doc(db, 'courses', newCourse.id), newCourse);
+      return newCourse;
     } catch (error) {
       console.error('Error creating course:', error);
       throw error;
@@ -104,13 +105,13 @@ export const CourseProvider = ({ children }) => {
 
   const updateCourse = async (courseId, updates) => {
     if (!user) throw new Error('User not authenticated');
-    
+
     try {
       const updatedData = {
         ...updates,
         updatedAt: new Date(),
       };
-      
+
       await updateDoc(doc(db, 'courses', courseId), updatedData);
     } catch (error) {
       console.error('Error updating course:', error);
@@ -120,7 +121,7 @@ export const CourseProvider = ({ children }) => {
 
   const deleteCourse = async (courseId) => {
     if (!user) throw new Error('User not authenticated');
-    
+
     try {
       await deleteDoc(doc(db, 'courses', courseId));
     } catch (error) {
@@ -132,23 +133,59 @@ export const CourseProvider = ({ children }) => {
   const enrollStudent = async (courseId, studentId) => {
     try {
       const courseRef = doc(db, 'courses', courseId);
+      const userRef = doc(db, 'users', studentId);
       const courseSnap = await getDoc(courseRef);
-      
+
       if (!courseSnap.exists()) {
         throw new Error('Course not found');
       }
-      
+
       const courseData = courseSnap.data();
       const enrolledStudents = courseData.enrolledStudents || [];
-      
+
+      // Check maxStudents limit
+      if (courseData.maxStudents && typeof courseData.maxStudents === 'number' && courseData.maxStudents > 0) {
+        if (enrolledStudents.length >= courseData.maxStudents) {
+          throw new Error('Course is full');
+        }
+      }
+
       if (!enrolledStudents.includes(studentId)) {
+        // 1. Update Course Document
         enrolledStudents.push(studentId);
         await updateDoc(courseRef, {
           enrolledStudents,
           totalStudents: enrolledStudents.length,
           updatedAt: new Date().toISOString()
         });
-        
+
+        // 2. Update User Document (redundancy for faster querying)
+        const userSnap = await getDoc(userRef);
+        if (userSnap.exists()) {
+          const userData = userSnap.data();
+          const userEnrolledCourses = userData.enrolledCourses || [];
+          if (!userEnrolledCourses.includes(courseId)) {
+            userEnrolledCourses.push(courseId);
+
+            // Add initial progress entry
+            const courseProgress = userData.courseProgress || {};
+            if (!courseProgress[courseId]) {
+              courseProgress[courseId] = {
+                enrolledAt: new Date().toISOString(),
+                progressPercentage: 0,
+                completedLessons: [],
+                lastUpdated: new Date().toISOString()
+              };
+            }
+
+            await updateDoc(userRef, {
+              enrolledCourses: userEnrolledCourses,
+              courseProgress,
+              lastUpdated: new Date().toISOString()
+            });
+          }
+        }
+
         console.log('CourseContext: Student enrolled successfully:', { courseId, studentId });
         return true;
       } else {
@@ -181,32 +218,49 @@ export const CourseProvider = ({ children }) => {
   const getCourseAnalytics = async (courseId) => {
     try {
       const course = await getCourseById(courseId);
-      if (!course) throw new Error('Course not found');
+      if (!course) {
+        console.warn(`Course analytics: Course ${courseId} not found`);
+        return {
+          totalStudents: 0,
+          completionRate: 0,
+          averageProgress: 0,
+          averageRating: 0,
+          totalRevenue: 0,
+          monthlyEnrollments: 0,
+          totalViews: 0
+        };
+      }
 
       // Get real enrolled students data
       const enrolledStudents = course.enrolledStudents || [];
       const totalRevenue = enrolledStudents.length * (course.price || 0);
-      
-      // Get student progress data (for now, we'll simulate based on enrollment date)
-      // In a real app, you'd have a separate 'progress' collection
+
+      // Calculate real progress from students data
+      const studentsData = await getEnrolledStudentsData(courseId);
+      let totalProgress = 0;
       let completedStudents = 0;
-      if (enrolledStudents.length > 0) {
-        // Simulate some completion rate based on course age
-        const courseAge = Date.now() - new Date(course.createdAt).getTime();
-        const daysOld = courseAge / (1000 * 60 * 60 * 24);
-        completedStudents = Math.floor(enrolledStudents.length * Math.min(daysOld / 30, 0.8));
-      }
+
+      studentsData.forEach(student => {
+        totalProgress += (student.progress || 0);
+        if ((student.progress || 0) >= 100) {
+          completedStudents++;
+        }
+      });
+
+      const averageProgress = studentsData.length > 0 ? Math.round(totalProgress / studentsData.length) : 0;
+      const completionRate = studentsData.length > 0 ? Math.round((completedStudents / studentsData.length) * 100) : 0;
 
       const analytics = {
         totalStudents: enrolledStudents.length,
-        completionRate: enrolledStudents.length > 0 ? Math.round((completedStudents / enrolledStudents.length) * 100) : 0,
-        averageRating: 4.2, // Will be calculated from real reviews later
+        completionRate,
+        averageProgress,
+        averageRating: course?.averageRating || 0,
         totalRevenue,
-        monthlyEnrollments: enrolledStudents.length, // Simplified for now
-        totalViews: enrolledStudents.length * 3 // Estimate based on enrollments
+        monthlyEnrollments: enrolledStudents.length,
+        totalViews: enrolledStudents.length * 5
       };
-      
-      console.log('CourseContext: Real analytics loaded for course:', courseId, analytics);
+
+      console.log('CourseContext: Real analytics calculated:', analytics);
       return analytics;
     } catch (error) {
       console.error('Error loading course analytics:', error);
@@ -223,30 +277,21 @@ export const CourseProvider = ({ children }) => {
 
       // Get user profiles for enrolled students
       const studentsData = [];
-      for (const studentId of course.enrolledStudents) {
-        try {
-          const userDoc = await getDoc(doc(db, 'users', studentId));
-          if (userDoc.exists()) {
-            const userData = userDoc.data();
-            studentsData.push({
-              id: studentId,
-              name: userData.displayName || userData.email || 'Unknown User',
-              email: userData.email || 'No email',
-              enrolledAt: userData.enrolledCourses?.[courseId]?.enrolledAt || course.createdAt,
-              progress: Math.floor(Math.random() * 100), // Will be real progress later
-              lastActive: new Date(Date.now() - Math.random() * 7 * 24 * 60 * 60 * 1000).toISOString()
-            });
-          }
-        } catch (error) {
-          console.error('Error fetching student data:', error);
-          // Add placeholder for failed fetch
+      const studentPromises = course.enrolledStudents.map(userId => getDoc(doc(db, 'users', userId)));
+      const studentDocs = await Promise.all(studentPromises);
+
+      for (const userDoc of studentDocs) {
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+          const courseProgress = userData.courseProgress?.[courseId] || {};
+
           studentsData.push({
-            id: studentId,
-            name: 'Unknown User',
-            email: 'unknown@example.com',
-            enrolledAt: course.createdAt,
-            progress: 0,
-            lastActive: new Date().toISOString()
+            id: userDoc.id,
+            name: userData.displayName || userData.email || 'Unknown User',
+            email: userData.email || 'No email',
+            enrolledAt: courseProgress.enrolledAt || userData.enrolledCourses?.[courseId]?.enrolledAt || course?.createdAt || new Date().toISOString(),
+            progress: courseProgress.progressPercentage || 0,
+            lastActive: courseProgress.lastUpdated || userData.lastLogin || new Date().toISOString()
           });
         }
       }
@@ -273,7 +318,7 @@ export const CourseProvider = ({ children }) => {
       };
 
       modules.push(newModule);
-      
+
       await updateDoc(doc(db, 'courses', courseId), {
         modules,
         updatedAt: new Date().toISOString()
@@ -294,7 +339,7 @@ export const CourseProvider = ({ children }) => {
 
       const modules = course.modules || [];
       const moduleIndex = modules.findIndex(m => m.id === moduleId);
-      
+
       if (moduleIndex === -1) throw new Error('Module not found');
 
       modules[moduleIndex] = {
@@ -336,6 +381,47 @@ export const CourseProvider = ({ children }) => {
     }
   };
 
+  const getCourseSessions = async (courseId) => {
+    try {
+      const sessionsRef = collection(db, 'courses', courseId, 'sessions');
+      const q = query(sessionsRef, orderBy('scheduledAt', 'asc'));
+      const snapshot = await getDocs(q);
+      return snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    } catch (error) {
+      console.error('Error getting course sessions:', error);
+      // Fallback if collection doesn't exist yet
+      return [];
+    }
+  };
+
+  const addCourseSession = async (courseId, sessionData) => {
+    try {
+      const sessionsRef = collection(db, 'courses', courseId, 'sessions');
+      const newSession = {
+        ...sessionData,
+        createdAt: new Date().toISOString(),
+      };
+      const docRef = await addDoc(sessionsRef, newSession);
+      return { id: docRef.id, ...newSession };
+    } catch (error) {
+      console.error('Error adding course session:', error);
+      throw error;
+    }
+  };
+
+  const updateCourseSession = async (courseId, sessionId, updates) => {
+    try {
+      const sessionRef = doc(db, 'courses', courseId, 'sessions', sessionId);
+      await updateDoc(sessionRef, {
+        ...updates,
+        updatedAt: new Date().toISOString()
+      });
+    } catch (error) {
+      console.error('Error updating course session:', error);
+      throw error;
+    }
+  };
+
   const getPublishedCourses = () => {
     return courses.filter(course => course.status === 'published');
   };
@@ -356,6 +442,9 @@ export const CourseProvider = ({ children }) => {
     addCourseModule,
     updateCourseModule,
     deleteCourseModule,
+    getCourseSessions,
+    addCourseSession,
+    updateCourseSession,
   };
 
   return (

@@ -11,6 +11,14 @@ export { default as EnrollmentSuccess } from './EnrollmentSuccess.jsx';
 export { default as CourseManagement } from './CourseManagement.jsx';
 export { default as ModuleEditor } from './ModuleEditor.jsx';
 export { default as CourseLearning } from './CourseLearning.jsx';
+export { default as CourseReviews } from './CourseReviews.jsx';
+export { default as FirebaseDataCleaner } from './FirebaseDataCleaner.jsx';
+export { default as FirebaseDataSeeder } from './FirebaseDataSeeder.jsx';
+export { default as AdminDashboard } from './AdminDashboard.jsx';
+export { default as UserTable } from './UserTable.jsx';
+export { default as CourseTable } from './CourseTable.jsx';
+
+export { default as AdminCourseDetail } from './AdminCourseDetail.jsx';
 
 // Course Components
 export { default as CourseCard } from './course/CourseCard.jsx';
