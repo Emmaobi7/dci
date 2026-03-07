@@ -9,7 +9,7 @@ import { useUser } from '../contexts/UserContext';
 import { useAuth } from '../contexts/AuthContext';
 
 // Backend Configuration
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+const API_URL = import.meta.env.VITE_API_URL;
 
 const AIAssistant = () => {
     const [prompt, setPrompt] = useState(() => localStorage.getItem('ai_studio_prompt') || '');
