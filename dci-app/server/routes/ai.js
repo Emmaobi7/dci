@@ -1,17 +1,17 @@
 import express from 'express';
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import { GoogleGenAI } from '@google/genai';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
 const router = express.Router();
 
-// Initialize Gemini AI
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
+// Initialize Gemini AI with new SDK
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || '' });
 
 router.post('/generate', async (req, res) => {
     try {
-        const { prompt, config } = req.body;
+        const { prompt } = req.body;
 
         if (!prompt) {
             return res.status(400).json({ success: false, error: 'Prompt is required' });
@@ -21,22 +21,14 @@ router.post('/generate', async (req, res) => {
             return res.status(500).json({ success: false, error: 'Gemini API Key is not configured on the server' });
         }
 
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-
-        const result = await model.generateContent({
-            contents: [{
-                parts: [{
-                    text: prompt
-                }]
-            }],
-            generationConfig: config || {
-                temperature: 0.8,
-                maxOutputTokens: 8192,
-            }
+        // Using new model and syntax as requested
+        const response = await ai.models.generateContent({
+            model: "gemini-3-flash-preview",
+            contents: prompt,
         });
 
-        const response = await result.response;
-        const text = response.text();
+        // access text directly as a property
+        const text = response.text;
 
         res.json({ success: true, text });
     } catch (error) {
