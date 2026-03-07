@@ -69,7 +69,7 @@ export const UserProvider = ({ children }) => {
   }, [user]);
 
   const updateUserProfile = async (updates) => {
-    if (!user || !userProfile) throw new Error('User not authenticated');
+    if (!user) throw new Error('User not authenticated');
 
     try {
       const userRef = doc(db, 'users', user.uid);
@@ -78,8 +78,8 @@ export const UserProvider = ({ children }) => {
         lastUpdated: new Date().toISOString(),
       };
 
-      await updateDoc(userRef, updatedData);
-      console.log('UserContext: Profile updated:', updatedData);
+      await setDoc(userRef, updatedData, { merge: true });
+      console.log('UserContext: Profile updated (merged):', updatedData);
     } catch (error) {
       console.error('Error updating user profile:', error);
       throw error;

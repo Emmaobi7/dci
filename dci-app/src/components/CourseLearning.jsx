@@ -164,83 +164,72 @@ const CourseLearning = ({ course, onBack }) => {
   return (
     <div className="min-h-screen bg-gray-900">
       {/* Header */}
-      <header className="bg-gray-800/70 backdrop-blur-lg border-b border-gray-700">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <Button
-                onClick={onBack}
-                className="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2"
-              >
-                <FaArrowLeft className="mr-2" />
-                BACK
-              </Button>
+      <header className="bg-gray-800/70 backdrop-blur-lg border-b border-gray-700 sticky top-0 z-30">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 py-3 sm:py-4">
 
-              <div>
-                <h1 className="text-2xl font-bold text-white font-mono tracking-wider">
-                  {courseData.title}
-                </h1>
-                <p className="text-gray-400 font-mono text-sm">
-                  LIVE SESSIONS • INSTRUCTOR: {courseData.instructorName?.toUpperCase()}
-                </p>
-              </div>
-            </div>
+          {/* Row 1: Back + Title + Stats */}
+          <div className="flex items-center gap-2 sm:gap-4 mb-2 sm:mb-3">
+            <Button
+              onClick={onBack}
+              className="bg-gray-700 hover:bg-gray-600 text-white px-3 py-1.5 text-xs sm:text-sm shrink-0"
+            >
+              <FaArrowLeft className="sm:mr-2" />
+              <span className="hidden sm:inline">BACK</span>
+            </Button>
 
-            {/* Progress Stats */}
-            <div className="flex space-x-6">
+            {/* Title — truncates on mobile */}
+            <h1 className="flex-1 text-sm sm:text-2xl font-bold text-white font-mono tracking-wider truncate min-w-0">
+              {courseData.title}
+            </h1>
+
+            {/* Stat pills */}
+            <div className="flex items-center gap-2 shrink-0">
               <div className="text-center">
-                <div className="text-2xl font-bold text-teal-400 font-mono">
+                <div className="text-base sm:text-2xl font-bold text-teal-400 font-mono leading-tight">
                   {attendanceRecords.filter(r => r.attended).length}
                 </div>
-                <div className="text-gray-400 font-mono text-xs">ATTENDED</div>
+                <div className="text-gray-400 font-mono text-[9px] sm:text-xs uppercase">Attended</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-yellow-400 font-mono">
+                <div className="text-base sm:text-2xl font-bold text-yellow-400 font-mono leading-tight">
                   {attendanceRate}%
                 </div>
-                <div className="text-gray-400 font-mono text-xs">RATE</div>
+                <div className="text-gray-400 font-mono text-[9px] sm:text-xs uppercase">Rate</div>
               </div>
             </div>
           </div>
 
-          {/* Tab Navigation */}
-          <div className="flex space-x-1 mt-4 overflow-x-auto pb-2">
-            <button
-              onClick={() => setCurrentTab('content')}
-              className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-mono text-sm transition-colors whitespace-nowrap ${currentTab === 'content'
-                ? 'bg-teal-500 text-gray-900 font-bold'
-                : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                }`}
-            >
-              <FaPlay />
-              <span>COURSE CONTENT</span>
-            </button>
-            <button
-              onClick={() => setCurrentTab('upcoming')}
-              className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-mono text-sm transition-colors ${currentTab === 'upcoming'
-                ? 'bg-teal-500 text-gray-900 font-bold'
-                : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                }`}
-            >
-              <FaCalendarAlt />
-              <span>UPCOMING SESSIONS</span>
-            </button>
-            <button
-              onClick={() => setCurrentTab('past')}
-              className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-mono text-sm transition-colors ${currentTab === 'past'
-                ? 'bg-teal-500 text-gray-900 font-bold'
-                : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-                }`}
-            >
-              <FaRecordVinyl />
-              <span>PAST SESSIONS</span>
-            </button>
+          {/* Subtitle — desktop only */}
+          <p className="hidden sm:block text-gray-400 font-mono text-sm mb-3">
+            LIVE SESSIONS • INSTRUCTOR: {courseData.instructorName?.toUpperCase()}
+          </p>
+
+          {/* Tab Navigation — scrollable, abbreviated on mobile */}
+          <div className="flex gap-1 overflow-x-auto scrollbar-hide">
+            {[
+              { id: 'content', icon: FaPlay, label: 'Course Content', short: 'Content' },
+              { id: 'upcoming', icon: FaCalendarAlt, label: 'Upcoming Sessions', short: 'Upcoming' },
+              { id: 'past', icon: FaRecordVinyl, label: 'Past Sessions', short: 'Past' },
+            ].map(tab => (
+              <button
+                key={tab.id}
+                onClick={() => setCurrentTab(tab.id)}
+                className={`shrink-0 flex items-center gap-1.5 px-2.5 sm:px-4 py-2 rounded-lg font-mono text-xs transition-colors ${currentTab === tab.id
+                  ? 'bg-teal-500 text-gray-900 font-bold'
+                  : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                  }`}
+              >
+                <tab.icon className="text-xs sm:text-sm" />
+                <span className="hidden sm:inline">{tab.label.toUpperCase()}</span>
+                <span className="sm:hidden">{tab.short.toUpperCase()}</span>
+              </button>
+            ))}
           </div>
         </div>
       </header>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-6 py-8">
+      <main className="max-w-7xl mx-auto px-3 sm:px-6 py-6 sm:py-8">
         {
           loading ? (
             <div className="text-center py-12" >
@@ -440,66 +429,60 @@ const CourseLearning = ({ course, onBack }) => {
                         const attendanceStatus = getAttendanceStatus(session.id);
 
                         return (
-                          <div key={session.id} className="bg-gray-800/70 backdrop-blur-lg border border-gray-700 rounded-xl p-6">
-                            <div className="flex justify-between items-start">
-                              <div className="flex-1">
-                                <div className="flex items-center space-x-3 mb-2">
-                                  <h3 className="text-lg font-bold text-white font-mono">
-                                    {session.title}
-                                  </h3>
-                                  {attendanceStatus === 'attended' && (
-                                    <div className="flex items-center space-x-1 bg-green-500/20 text-green-400 px-2 py-1 rounded-full">
-                                      <FaCheckCircle className="text-xs" />
-                                      <span className="text-xs font-mono">ATTENDED</span>
-                                    </div>
-                                  )}
-                                  {attendanceStatus === 'missed' && (
-                                    <div className="flex items-center space-x-1 bg-red-500/20 text-red-400 px-2 py-1 rounded-full">
-                                      <FaTimesCircle className="text-xs" />
-                                      <span className="text-xs font-mono">MISSED</span>
-                                    </div>
-                                  )}
+                          <div key={session.id} className="bg-gray-800/70 backdrop-blur-lg border border-gray-700 rounded-xl p-4 sm:p-6">
+                            {/* Title + attendance badge */}
+                            <div className="flex items-start gap-2 mb-1">
+                              <h3 className="flex-1 text-sm sm:text-lg font-bold text-white font-mono min-w-0">
+                                {session.title}
+                              </h3>
+                              {attendanceStatus === 'attended' && (
+                                <div className="shrink-0 flex items-center gap-1 bg-green-500/20 text-green-400 px-2 py-0.5 rounded-full">
+                                  <FaCheckCircle className="text-xs" />
+                                  <span className="text-xs font-mono">ATTENDED</span>
                                 </div>
+                              )}
+                              {attendanceStatus === 'missed' && (
+                                <div className="shrink-0 flex items-center gap-1 bg-red-500/20 text-red-400 px-2 py-0.5 rounded-full">
+                                  <FaTimesCircle className="text-xs" />
+                                  <span className="text-xs font-mono">MISSED</span>
+                                </div>
+                              )}
+                            </div>
 
-                                <p className="text-gray-400 font-mono text-sm mb-4">
-                                  {formatDate(session.scheduledAt)} • {session.duration}
-                                </p>
-                              </div>
+                            {/* Date + duration */}
+                            <p className="text-gray-400 font-mono text-xs sm:text-sm mb-3">
+                              {formatDate(session.scheduledAt)} • {session.duration}
+                            </p>
 
-                              <div className="ml-6 flex space-x-3">
-                                {/* Attendance Marking */}
-                                {!attendanceStatus && (
-                                  <div className="flex space-x-2">
-                                    <Button
-                                      onClick={() => markAttendance(session.id, true)}
-                                      className="bg-green-600 hover:bg-green-700 text-white px-3 py-2 text-sm"
-                                    >
-                                      <FaCheckCircle className="mr-1" />
-                                      ATTENDED
-                                    </Button>
-                                    <Button
-                                      onClick={() => markAttendance(session.id, false)}
-                                      className="bg-red-600 hover:bg-red-700 text-white px-3 py-2 text-sm"
-                                    >
-                                      <FaTimesCircle className="mr-1" />
-                                      MISSED
-                                    </Button>
-                                  </div>
-                                )}
-
-                                {/* Recording Download */}
-                                {session.recordingUrl && (
+                            {/* Action buttons — stacked on mobile, inline on sm+ */}
+                            <div className="flex flex-wrap gap-2">
+                              {!attendanceStatus && (
+                                <>
                                   <Button
-                                    onClick={() => downloadRecording(session.recordingUrl, session.title)}
-                                    className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 text-sm"
+                                    onClick={() => markAttendance(session.id, true)}
+                                    className="bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 text-xs"
                                   >
-                                    <FaPlay className="mr-1" />
-                                    RECORDING
+                                    <FaCheckCircle className="mr-1" /> ATTENDED
                                   </Button>
-                                )}
-                              </div>
+                                  <Button
+                                    onClick={() => markAttendance(session.id, false)}
+                                    className="bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 text-xs"
+                                  >
+                                    <FaTimesCircle className="mr-1" /> MISSED
+                                  </Button>
+                                </>
+                              )}
+                              {session.recordingUrl && (
+                                <Button
+                                  onClick={() => downloadRecording(session.recordingUrl, session.title)}
+                                  className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1.5 text-xs"
+                                >
+                                  <FaPlay className="mr-1" /> RECORDING
+                                </Button>
+                              )}
                             </div>
                           </div>
+
                         );
                       })}
                     </div>

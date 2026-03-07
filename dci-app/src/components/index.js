@@ -24,3 +24,4 @@ export { default as AdminCourseDetail } from './AdminCourseDetail.jsx';
 export { default as CourseCard } from './course/CourseCard.jsx';
 export { default as CourseCatalog } from './course/CourseCatalog.jsx';
 export { default as CreateCourse } from './course/CreateCourse.jsx';
+export { default as AIAssistant } from './AIAssistant.jsx';

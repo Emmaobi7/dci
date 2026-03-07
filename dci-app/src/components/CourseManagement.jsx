@@ -261,47 +261,53 @@ const CourseManagement = ({ course, onBack }) => {
   return (
     <div className="min-h-screen bg-gray-900">
       {/* Header */}
-      <header className="bg-gray-800/70 backdrop-blur-lg border-b border-gray-700">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          <div className="flex items-center space-x-4 mb-4">
+      <header className="bg-gray-800/70 backdrop-blur-lg border-b border-gray-700 sticky top-0 z-30">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 py-3 sm:py-4">
+
+          {/* Row 1: Back + Status badge */}
+          <div className="flex items-center gap-2 sm:gap-4 mb-2 sm:mb-3">
             <Button
               onClick={onBack}
-              className="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2"
+              className="bg-gray-700 hover:bg-gray-600 text-white px-3 py-1.5 text-xs sm:text-sm shrink-0"
             >
-              <FaArrowLeft className="mr-2" />
-              BACK
+              <FaArrowLeft className="sm:mr-2" />
+              <span className="hidden sm:inline">BACK</span>
             </Button>
-            <div className="flex-1">
-              <h1 className="text-2xl font-bold text-white font-mono tracking-wider">
-                {courseData.title}
-              </h1>
-              <p className="text-gray-400 font-mono text-sm">
-                COURSE MANAGEMENT • INSTRUCTOR: {courseData.instructorName?.toUpperCase()}
-              </p>
-            </div>
-            <div className="text-right">
-              <p className="text-white font-mono font-bold">
+
+            {/* Course title — truncates on mobile */}
+            <h1 className="flex-1 text-sm sm:text-2xl font-bold text-white font-mono tracking-wider truncate min-w-0">
+              {courseData.title}
+            </h1>
+
+            {/* Status + student count — right side */}
+            <div className="shrink-0 text-right">
+              <span className={`inline-block px-2 py-0.5 rounded-full text-[10px] sm:text-xs font-mono font-bold ${courseData.status === 'published' ? 'bg-green-500/20 text-green-400 border border-green-500/30' : 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30'
+                }`}>
                 {courseData.status?.toUpperCase()}
-              </p>
-              <p className="text-teal-400 text-sm font-mono">
-                {stats.totalStudents} STUDENTS
-              </p>
+              </span>
+              <p className="text-teal-400 text-[10px] sm:text-sm font-mono mt-0.5">{stats.totalStudents} STU</p>
             </div>
           </div>
 
-          {/* Tab Navigation */}
-          <div className="flex space-x-1">
+          {/* Row 2: Subtitle — desktop only */}
+          <p className="hidden sm:block text-gray-400 font-mono text-sm mb-3">
+            COURSE MANAGEMENT • INSTRUCTOR: {courseData.instructorName?.toUpperCase()}
+          </p>
+
+          {/* Tab Navigation — scrollable on mobile, icon-only labels */}
+          <div className="flex gap-1 overflow-x-auto scrollbar-hide">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-mono text-sm transition-colors ${activeTab === tab.id
-                  ? 'bg-teal-500 text-gray-900 font-bold'
-                  : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                className={`shrink-0 flex items-center gap-1.5 px-2.5 sm:px-4 py-2 rounded-lg font-mono text-xs transition-colors ${activeTab === tab.id
+                    ? 'bg-teal-500 text-gray-900 font-bold'
+                    : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
                   }`}
               >
-                <tab.icon />
-                <span>{tab.label.toUpperCase()}</span>
+                <tab.icon className="text-xs sm:text-sm" />
+                <span className="hidden sm:inline">{tab.label.toUpperCase()}</span>
+                <span className="sm:hidden text-[10px]">{tab.label.slice(0, 3).toUpperCase()}</span>
               </button>
             ))}
           </div>
@@ -309,7 +315,7 @@ const CourseManagement = ({ course, onBack }) => {
       </header>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-6 py-8">
+      <main className="max-w-7xl mx-auto px-3 sm:px-6 py-6 sm:py-8">
         {/* Overview Tab */}
         {activeTab === 'overview' && (
           <div className="space-y-8">

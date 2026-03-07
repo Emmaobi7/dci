@@ -5,12 +5,12 @@ import { useUser } from '../../contexts/UserContext';
 import { FaSearch, FaFilter, FaPlus } from 'react-icons/fa';
 
 const CourseCatalog = ({ onEnrollCourse, onCreateCourse, onViewCourse }) => {
-  console.log('CourseCatalog: Props received', { 
-    hasEnrollFunc: !!onEnrollCourse, 
-    hasCreateFunc: !!onCreateCourse, 
-    hasViewFunc: !!onViewCourse 
+  console.log('CourseCatalog: Props received', {
+    hasEnrollFunc: !!onEnrollCourse,
+    hasCreateFunc: !!onCreateCourse,
+    hasViewFunc: !!onViewCourse
   });
-  
+
   const { courses, loading } = useCourses();
   const { userProfile, isEnrolled } = useUser();
   const [filteredCourses, setFilteredCourses] = useState([]);
@@ -71,7 +71,7 @@ const CourseCatalog = ({ onEnrollCourse, onCreateCourse, onViewCourse }) => {
               EXPAND YOUR KNOWLEDGE • ENHANCE YOUR SKILLS
             </p>
           </div>
-          
+
           {userProfile?.role === 'instructor' && (
             <button
               onClick={onCreateCourse}
@@ -144,7 +144,7 @@ const CourseCatalog = ({ onEnrollCourse, onCreateCourse, onViewCourse }) => {
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredCourses.map((course) => (
               <CourseCard
                 key={course.id}

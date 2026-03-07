@@ -5,6 +5,7 @@ import { UserProvider } from './contexts/UserContext';
 import { CourseProvider } from './contexts/CourseContext';
 import Router from './components/Router';
 import Dashboard, { DashboardHome, CatalogPage, CreateCoursePage } from './components/Dashboard';
+import { AIAssistant } from './components';
 import { CourseLearningRoute, CourseManagementRoute } from './components/CourseRoutes';
 
 const LoadingScreen = () => (
@@ -31,6 +32,7 @@ const ProtectedApp = () => {
             <Route path="/dashboard" element={<DashboardHome />} />
             <Route path="/catalog" element={<CatalogPage />} />
             <Route path="/create-course" element={<CreateCoursePage />} />
+            <Route path="/build" element={<AIAssistant />} />
           </Route>
           <Route path="/courses/:courseId/manage" element={<CourseManagementRoute />} />
           <Route path="/courses/:courseId/learn" element={<CourseLearningRoute />} />

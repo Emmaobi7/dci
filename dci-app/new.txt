@@ -1,0 +1,56 @@
+Build a browser-based AI code assistant using only HTML, CSS, and vanilla JavaScript.
+
+Requirements:
+
+1. The app must be completely frontend-only (no backend, no Node server).
+2. It should have:
+   - A text input area where the user types instructions (e.g., "Create a responsive navbar").
+   - A "Generate" button.
+   - A code output panel (editable).
+   - A live preview panel that renders the generated HTML/CSS/JS.
+
+3. The app should call the Gemini API directly from the browser using fetch().
+   - Store the API key in a constant at the top of the script.
+   - Use the Gemini text generation endpoint.
+   - Send the user prompt with clear instructions:
+        "Return only valid HTML with embedded CSS and JS. No explanations."
+
+4. When the response is received:
+   - Extract the generated code.
+   - Display it inside the code editor panel.
+   - Render it inside a sandboxed iframe using iframe.srcdoc.
+
+5. The layout must:
+   - Use flexbox or grid.
+   - Split screen into:
+        Left: Prompt + Code
+        Right: Live Preview
+   - Be responsive.
+
+6. Use:
+   - Monaco Editor OR a textarea if Monaco is too heavy.
+   - iframe with sandbox="allow-scripts"
+
+7. Handle errors:
+   - Show loading state.
+   - Show API error messages clearly.
+
+8. Security:
+   - Use iframe sandbox.
+   - Do not allow access to parent window.
+
+9. Styling:
+   - Dark theme.
+   - Clean developer UI style.
+   - Minimal but modern.
+
+10. Keep everything in a single HTML file for now.
+
+
+
+
+Add a system prompt that forces structured output like:
+
+Wrap code inside triple backticks.
+Return only one complete HTML document.
+No markdown formatting outside the code block.

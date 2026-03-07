@@ -4,7 +4,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { useUser } from '../contexts/UserContext';
 import { useCourses } from '../contexts/CourseContext';
 import { Button, Logo, CourseCatalog, CreateCourse, RoleManager, AdminCourseManager, PaymentModal, EnrollmentSuccess, AdminBootstrap, FirebaseDataSeeder, FirebaseDataCleaner, AdminDashboard } from './index';
-import { FaSignOutAlt, FaUser, FaBook, FaChartLine, FaPlus, FaUsers, FaArrowLeft } from 'react-icons/fa';
+import { FaSignOutAlt, FaUser, FaBook, FaChartLine, FaPlus, FaUsers, FaArrowLeft, FaBars, FaTimes } from 'react-icons/fa';
 
 const buildStats = ({ currentRole, myCourses, courses, enrolledCourses }) => {
   if (currentRole === 'instructor') {
@@ -46,6 +46,7 @@ const Dashboard = () => {
   const [isCreatingCourse, setIsCreatingCourse] = useState(false);
   const [paymentModal, setPaymentModal] = useState({ isOpen: false, course: null });
   const [successModal, setSuccessModal] = useState({ isOpen: false, course: null });
+  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const currentRole = userProfile?.role || 'student';
 
   const enrolledCoursesData = useMemo(
@@ -157,6 +158,7 @@ const Dashboard = () => {
     goToCatalog: () => goTo('/catalog'),
     goToCreateCourse: () => goTo('/create-course'),
     goToDashboard: () => goTo('/dashboard'),
+    goToBuild: () => goTo('/build'),
     handleEnrollCourse,
     handleCreateCourse,
     isCreatingCourse
@@ -166,50 +168,56 @@ const Dashboard = () => {
     return <AdminDashboard />;
   }
 
+  const navLinks = [
+    { label: 'HOME', path: '/dashboard' },
+    { label: 'COURSES', path: '/catalog' },
+    { label: 'BUILD', path: '/build' }
+  ];
+
+  const handleMobileNavClick = (path) => {
+    goTo(path);
+    setIsMobileNavOpen(false);
+  };
+
   return (
     <div className="min-h-screen bg-gray-900">
-      <header className="bg-gray-800/70 backdrop-blur-lg border-b border-gray-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 space-y-4">
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex items-center justify-between sm:justify-start gap-3">
-              <button
-                type="button"
-                onClick={handleBackNav}
-                className="inline-flex items-center gap-2 text-xs sm:text-sm font-mono tracking-wider text-gray-300 hover:text-white bg-gray-700/80 border border-gray-600 rounded-lg px-3 py-2 transition-colors"
-              >
-                <FaArrowLeft />
-                BACK
-              </button>
-              <Logo size="md" />
+
+      {/* ── HEADER ── */}
+      <header className="bg-gray-800/70 backdrop-blur-lg border-b border-gray-700 sticky top-0 z-40">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6">
+          <div className="flex items-center h-14 sm:h-16 gap-2 sm:gap-4">
+
+            {/* Hamburger — mobile only */}
+            <button
+              type="button"
+              onClick={() => setIsMobileNavOpen(true)}
+              className="sm:hidden flex items-center justify-center w-9 h-9 rounded-lg bg-gray-700/80 border border-gray-600 text-gray-300 hover:text-white transition-colors shrink-0"
+              aria-label="Open navigation"
+            >
+              <FaBars />
+            </button>
+
+            {/* Back button — desktop only */}
+            <button
+              type="button"
+              onClick={handleBackNav}
+              className="hidden sm:inline-flex items-center gap-2 text-xs font-mono tracking-wider text-gray-300 hover:text-white bg-gray-700/80 border border-gray-600 rounded-lg px-3 py-2 transition-colors shrink-0"
+            >
+              <FaArrowLeft /> BACK
+            </button>
+
+            {/* Logo */}
+            <div className="shrink-0">
+              <Logo size="sm" />
             </div>
 
-            <div className="flex items-center justify-between sm:justify-end gap-3">
-              <div className="text-right">
-                <p className="text-white font-mono font-bold text-sm">{user?.displayName || 'USER'}</p>
-                <p className="text-teal-400 text-xs font-mono tracking-wider">{getRoleDisplayName()}</p>
-              </div>
-              <div className="w-10 h-10 bg-gradient-to-r from-teal-500 to-blue-600 rounded-full flex items-center justify-center">
-                <FaUser className="text-white" />
-              </div>
-              <Button
-                onClick={handleSignOut}
-                className="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2"
-              >
-                <FaSignOutAlt />
-              </Button>
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <nav className="flex flex-wrap gap-2 justify-center sm:justify-start">
-              {[
-                { label: 'DASHBOARD', path: '/dashboard' },
-                { label: 'COURSES', path: '/catalog' }
-              ].map((link) => (
+            {/* Desktop nav tabs */}
+            <nav className="hidden sm:flex flex-1 items-center gap-1">
+              {navLinks.map((link) => (
                 <button
                   key={link.path}
                   onClick={() => goTo(link.path)}
-                  className={`px-4 py-2 rounded-full font-mono text-xs sm:text-sm tracking-wider transition-colors border ${location.pathname === link.path
+                  className={`shrink-0 px-3 py-1.5 rounded-full font-mono text-xs tracking-wider transition-colors border ${location.pathname === link.path
                     ? 'bg-teal-500/20 border-teal-400 text-teal-300'
                     : 'border-transparent text-gray-400 hover:text-white hover:border-gray-600'
                     }`}
@@ -219,23 +227,96 @@ const Dashboard = () => {
               ))}
             </nav>
 
-            <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+            {/* Spacer on mobile */}
+            <div className="flex-1 sm:hidden" />
+
+            {/* User info + sign out */}
+            <div className="flex items-center gap-2 shrink-0">
+              <div className="hidden sm:block text-right">
+                <p className="text-white font-mono font-bold text-xs leading-tight">{user?.displayName || 'USER'}</p>
+                <p className="text-teal-400 text-[10px] font-mono tracking-wider">{getRoleDisplayName()}</p>
+              </div>
+              <div className="w-8 h-8 sm:w-9 sm:h-9 bg-gradient-to-r from-teal-500 to-blue-600 rounded-full flex items-center justify-center shrink-0">
+                <FaUser className="text-white text-xs" />
+              </div>
               <Button
-                onClick={() => goTo('/catalog')}
-                className="bg-teal-500 hover:bg-teal-400 text-gray-900 px-4 py-2 w-full sm:w-auto"
+                onClick={handleSignOut}
+                className="bg-gray-700 hover:bg-gray-600 text-white px-2.5 py-2 sm:px-3"
               >
-                BROWSE COURSES
+                <FaSignOutAlt className="text-xs sm:text-sm" />
               </Button>
-              {/* <Button
-                onClick={() => goTo('/create-course')}
-                className="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 w-full sm:w-auto"
-              >
-                CREATE COURSE
-              </Button> */}
             </div>
           </div>
         </div>
       </header>
+
+      {/* ── MOBILE SIDE DRAWER ── */}
+      {/* Backdrop */}
+      <div
+        onClick={() => setIsMobileNavOpen(false)}
+        className={`sm:hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm transition-opacity duration-300 ${isMobileNavOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+          }`}
+      />
+      {/* Drawer panel */}
+      <div
+        className={`sm:hidden fixed top-0 left-0 h-full w-72 z-50 bg-gray-900 border-r border-gray-700 flex flex-col transform transition-transform duration-300 ease-in-out ${isMobileNavOpen ? 'translate-x-0' : '-translate-x-full'
+          }`}
+      >
+        {/* Drawer header */}
+        <div className="flex items-center justify-between px-5 py-4 border-b border-gray-700 bg-gray-800/60">
+          <Logo size="sm" />
+          <button
+            onClick={() => setIsMobileNavOpen(false)}
+            className="w-8 h-8 flex items-center justify-center rounded-lg text-gray-400 hover:text-white hover:bg-gray-700 transition-colors"
+            aria-label="Close navigation"
+          >
+            <FaTimes />
+          </button>
+        </div>
+
+        {/* User info */}
+        <div className="flex items-center gap-3 px-5 py-4 border-b border-gray-700/50">
+          <div className="w-10 h-10 bg-gradient-to-r from-teal-500 to-blue-600 rounded-full flex items-center justify-center shrink-0">
+            <FaUser className="text-white text-sm" />
+          </div>
+          <div>
+            <p className="text-white font-mono font-bold text-sm leading-tight">{user?.displayName || 'USER'}</p>
+            <p className="text-teal-400 text-[10px] font-mono tracking-wider">{getRoleDisplayName()}</p>
+          </div>
+        </div>
+
+        {/* Nav links */}
+        <nav className="flex-1 flex flex-col gap-1 px-3 py-4">
+          {navLinks.map((link) => (
+            <button
+              key={link.path}
+              onClick={() => handleMobileNavClick(link.path)}
+              className={`flex items-center gap-3 w-full px-4 py-3 rounded-xl font-mono text-sm tracking-wider text-left transition-all ${location.pathname === link.path
+                ? 'bg-teal-500/20 border border-teal-400/40 text-teal-300'
+                : 'text-gray-400 hover:text-white hover:bg-gray-800'
+                }`}
+            >
+              {link.label}
+            </button>
+          ))}
+        </nav>
+
+        {/* Bottom actions */}
+        <div className="px-3 py-4 border-t border-gray-700 space-y-2">
+          <button
+            onClick={handleBackNav}
+            className="flex items-center gap-3 w-full px-4 py-3 rounded-xl font-mono text-sm text-gray-400 hover:text-white hover:bg-gray-800 transition-all"
+          >
+            <FaArrowLeft className="text-xs" /> BACK
+          </button>
+          <button
+            onClick={handleSignOut}
+            className="flex items-center gap-3 w-full px-4 py-3 rounded-xl font-mono text-sm text-red-400 hover:text-white hover:bg-red-500/10 transition-all"
+          >
+            <FaSignOutAlt className="text-xs" /> SIGN OUT
+          </button>
+        </div>
+      </div>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
         <Outlet context={outletContext} />
@@ -277,7 +358,8 @@ export const DashboardHome = () => {
     myCourses,
     handleViewCourse,
     goToCatalog,
-    goToCreateCourse
+    goToCreateCourse,
+    goToBuild
   } = useDashboardContext();
 
   return (
@@ -443,6 +525,12 @@ export const DashboardHome = () => {
               CREATE COURSE
             </Button>
           )}
+          <Button
+            onClick={goToBuild}
+            className="bg-gradient-to-r from-teal-500 to-blue-600 hover:from-teal-400 hover:to-blue-500 text-gray-900 font-bold px-6 py-3"
+          >
+            🚀 BUILD WITH AI
+          </Button>
         </div>
       </div>
     </>
