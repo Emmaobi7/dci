@@ -159,6 +159,7 @@ const Dashboard = () => {
     goToCreateCourse: () => goTo('/create-course'),
     goToDashboard: () => goTo('/dashboard'),
     goToBuild: () => goTo('/build'),
+    goToAIPlanner: () => goTo('/ai-planner'),
     handleEnrollCourse,
     handleCreateCourse,
     isCreatingCourse
@@ -171,6 +172,7 @@ const Dashboard = () => {
   const navLinks = [
     { label: 'HOME', path: '/dashboard' },
     { label: 'COURSES', path: '/catalog' },
+    { label: 'AI PLANNER', path: '/ai-planner' },
     { label: 'BUILD', path: '/build' }
   ];
 
@@ -359,7 +361,8 @@ export const DashboardHome = () => {
     handleViewCourse,
     goToCatalog,
     goToCreateCourse,
-    goToBuild
+    goToBuild,
+    goToAIPlanner
   } = useDashboardContext();
 
   return (
@@ -526,8 +529,14 @@ export const DashboardHome = () => {
             </Button>
           )}
           <Button
-            onClick={goToBuild}
+            onClick={goToAIPlanner}
             className="bg-gradient-to-r from-teal-500 to-blue-600 hover:from-teal-400 hover:to-blue-500 text-gray-900 font-bold px-6 py-3"
+          >
+            🧠 AI PLANNER
+          </Button>
+          <Button
+            onClick={goToBuild}
+            className="bg-gray-700 hover:bg-gray-600 text-white px-6 py-3"
           >
             🚀 BUILD WITH AI
           </Button>

@@ -19,9 +19,11 @@ export { default as UserTable } from './UserTable.jsx';
 export { default as CourseTable } from './CourseTable.jsx';
 
 export { default as AdminCourseDetail } from './AdminCourseDetail.jsx';
+export { default as AIPanner } from './AIPanner.jsx';
 
 // Course Components
 export { default as CourseCard } from './course/CourseCard.jsx';
 export { default as CourseCatalog } from './course/CourseCatalog.jsx';
 export { default as CreateCourse } from './course/CreateCourse.jsx';
 export { default as AIAssistant } from './AIAssistant.jsx';
+export { default as ChatWidget } from './ChatWidget.jsx';

@@ -426,6 +426,56 @@ export const CourseProvider = ({ children }) => {
     return courses.filter(course => course.status === 'published');
   };
 
+  const createCourseStructure = async (courseId, structure) => {
+    try {
+      const courseRef = doc(db, 'courses', courseId);
+      const courseSnap = await getDoc(courseRef);
+
+      if (!courseSnap.exists()) throw new Error('Course not found');
+
+      const existingData = courseSnap.data();
+      
+      // Merge or overwrite modules
+      // For an AI-first planner, we might want to completely replace the structure 
+      // if it's a "regenerate" flow, but here we'll append/merge logically.
+      const newModules = structure.modules.map(mod => ({
+        id: uuidv4(),
+        title: mod.title,
+        description: mod.description,
+        lessons: mod.lessons.map(lesson => ({
+          id: uuidv4(),
+          ...lesson,
+          createdAt: new Date().toISOString()
+        })),
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      }));
+
+      await updateDoc(courseRef, {
+        modules: newModules, // Replacing with the AI-generated structure
+        updatedAt: new Date().toISOString()
+      });
+
+      // If structure contains sessions, add them too
+      if (structure.sessions && structure.sessions.length > 0) {
+        const sessionsRef = collection(db, 'courses', courseId, 'sessions');
+        for (const session of structure.sessions) {
+          await addDoc(sessionsRef, {
+            ...session,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString()
+          });
+        }
+      }
+
+      console.log('CourseContext: AI Structure applied to course:', courseId);
+      return true;
+    } catch (error) {
+      console.error('Error creating course structure:', error);
+      throw error;
+    }
+  };
+
   const value = {
     courses,
     myCourses,
@@ -445,6 +495,7 @@ export const CourseProvider = ({ children }) => {
     getCourseSessions,
     addCourseSession,
     updateCourseSession,
+    createCourseStructure,
   };
 
   return (
