@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useUser } from '../contexts/UserContext';
 import { useCourses } from '../contexts/CourseContext';
-import { Logo, Button, UserTable, CourseTable } from './index';
-import { FaUserCog, FaBook, FaSignOutAlt, FaChartPie, FaBars, FaTimes } from 'react-icons/fa';
+import { Logo, Button, UserTable, CourseTable, AdminApplicationsList } from './index';
+import { FaUserCog, FaBook, FaSignOutAlt, FaChartPie, FaBars, FaTimes, FaUserTie } from 'react-icons/fa';
 import { collection, getCountFromServer } from 'firebase/firestore';
 import { db } from '../firebase';
 
@@ -54,6 +54,7 @@ const AdminDashboard = () => {
         { id: 'overview', label: 'Overview', icon: FaChartPie },
         { id: 'users', label: 'User Management', icon: FaUserCog },
         { id: 'courses', label: 'Course Management', icon: FaBook },
+        { id: 'applications', label: 'Instructor Apps', icon: FaUserTie },
     ];
 
     const renderContent = () => {
@@ -83,6 +84,8 @@ const AdminDashboard = () => {
                 return <UserTable />;
             case 'courses':
                 return <CourseTable />;
+            case 'applications':
+                return <AdminApplicationsList />;
             default:
                 return <div>Select a tab</div>;
         }

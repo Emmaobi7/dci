@@ -3,7 +3,7 @@ import { Outlet, useLocation, useNavigate, useOutletContext } from 'react-router
 import { useAuth } from '../contexts/AuthContext';
 import { useUser } from '../contexts/UserContext';
 import { useCourses } from '../contexts/CourseContext';
-import { Button, Logo, CourseCatalog, CreateCourse, RoleManager, AdminCourseManager, PaymentModal, EnrollmentSuccess, AdminBootstrap, FirebaseDataSeeder, FirebaseDataCleaner, AdminDashboard } from './index';
+import { Button, Logo, CourseCatalog, CreateCourse, RoleManager, AdminCourseManager, PaymentModal, EnrollmentSuccess, AdminBootstrap, FirebaseDataSeeder, FirebaseDataCleaner, AdminDashboard, InstructorApplicationModal } from './index';
 import { FaSignOutAlt, FaUser, FaBook, FaChartLine, FaPlus, FaUsers, FaArrowLeft, FaBars, FaTimes } from 'react-icons/fa';
 
 const buildStats = ({ currentRole, myCourses, courses, enrolledCourses }) => {
@@ -46,6 +46,7 @@ const Dashboard = () => {
   const [isCreatingCourse, setIsCreatingCourse] = useState(false);
   const [paymentModal, setPaymentModal] = useState({ isOpen: false, course: null });
   const [successModal, setSuccessModal] = useState({ isOpen: false, course: null });
+  const [isApplyInstructorOpen, setIsApplyInstructorOpen] = useState(false);
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const currentRole = userProfile?.role || 'student';
 
@@ -162,7 +163,8 @@ const Dashboard = () => {
     goToAIPlanner: () => goTo('/ai-planner'),
     handleEnrollCourse,
     handleCreateCourse,
-    isCreatingCourse
+    isCreatingCourse,
+    setIsApplyInstructorOpen
   };
 
   if (currentRole === 'admin') {
@@ -337,6 +339,11 @@ const Dashboard = () => {
         onClose={() => setSuccessModal({ isOpen: false, course: null })}
         onStartCourse={handleStartCourse}
       />
+
+      <InstructorApplicationModal 
+        isOpen={isApplyInstructorOpen} 
+        onClose={() => setIsApplyInstructorOpen(false)} 
+      />
     </div>
   );
 };
@@ -362,7 +369,8 @@ export const DashboardHome = () => {
     goToCatalog,
     goToCreateCourse,
     goToBuild,
-    goToAIPlanner
+    goToAIPlanner,
+    setIsApplyInstructorOpen
   } = useDashboardContext();
 
   return (
@@ -520,6 +528,14 @@ export const DashboardHome = () => {
           >
             EXPLORE COURSES
           </Button>
+          {currentRole === 'student' && (
+            <Button
+              onClick={() => setIsApplyInstructorOpen(true)}
+              className="bg-gray-700 hover:bg-gray-600 text-white px-6 py-3"
+            >
+              APPLY TO TEACH
+            </Button>
+          )}
           {currentRole === 'instructor' && (
             <Button
               onClick={goToCreateCourse}
