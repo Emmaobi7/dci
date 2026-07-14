@@ -4,26 +4,26 @@
     <!-- Primary Meta Tags -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Get started with affordable website hosting through DCIAFRICA's trusted partners. Launch your online presence today with our exclusive deals.">
-    <meta name="keywords" content="web hosting Africa, affordable hosting, domain registration, website builder, Nigerian hosting">
-    <meta name="author" content="Digital Connect Institute Africa">
+    <meta name="description" content="Custom web design, application development, and mobile apps built by DCIAFRICA Web Agency. We build premium digital experiences for companies and individuals.">
+    <meta name="keywords" content="web agency Nigeria, mobile app development Africa, custom software development, hire web developer, design studio Lagos">
+    <meta name="author" content="Digital Connect Institute Africa Web Agency">
     <meta name="theme-color" content="#0c1e59">
     
     <!-- Open Graph / Facebook Meta Tags -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://dciafrica.org/hosting">
-    <meta property="og:title" content="Start Your Website | DCIAFRICA Hosting Partners">
-    <meta property="og:description" content="Launch your website with our trusted hosting partners. Affordable plans with DCIAFRICA exclusive deals.">
-    <meta property="og:image" content="https://dciafrica.org/images/hosting-preview.jpg">
+    <meta property="og:url" content="https://dciafrica.org/agency">
+    <meta property="og:title" content="Web & Mobile App Development Agency | DCIAFRICA">
+    <meta property="og:description" content="We design and deploy high-performance websites and mobile apps for individuals and businesses globally.">
+    <meta property="og:image" content="logo.png">
     
     <!-- Twitter Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:url" content="https://dciafrica.org/hosting">
-    <meta name="twitter:title" content="Start Your Website | DCIAFRICA Hosting Partners">
-    <meta name="twitter:description" content="Launch your website with our trusted hosting partners. Affordable plans with DCIAFRICA exclusive deals.">
-    <meta name="twitter:image" content="https://dciafrica.org/images/hosting-preview.jpg">
+    <meta name="twitter:url" content="https://dciafrica.org/agency">
+    <meta name="twitter:title" content="Web & Mobile App Development Agency | DCIAFRICA">
+    <meta name="twitter:description" content="We design and deploy high-performance websites and mobile apps for individuals and businesses globally.">
+    <meta name="twitter:image" content="logo.png">
     
-    <title>Start Your Website | DCIAFRICA Hosting Partners</title>
+    <title>Web & Mobile Agency | DCIAFRICA</title>
     <link rel="shortcut icon" href="logo.png" type="image/x-icon">
     <link rel="apple-touch-icon" href="logo.png">
     
@@ -48,196 +48,266 @@
         background-clip: text;
         color: transparent;
       }
+
+      .gradient-bg {
+        background: linear-gradient(135deg, #00b9ae 0%, #fbbf24 100%);
+      }
       
-      .hosting-card {
-        transition: all 0.3s ease;
+      .portfolio-card {
+        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         transform-style: preserve-3d;
       }
       
-      .hosting-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      .portfolio-card:hover {
+        transform: translateY(-8px) scale(1.01);
+        box-shadow: 0 30px 40px -15px rgba(0, 185, 174, 0.15);
+      }
+
+      .glass-card {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
       }
     </style>
   </head>
 
   <body class="bg-[#0c1e59] text-white">
     <!-- Header -->
-    <header class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center sticky top-0 z-50 bg-[#0c1e59]/90 backdrop-blur-sm">
+    <header class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center sticky top-0 z-50 bg-[#0c1e59]/90 backdrop-blur-md border-b border-white/5">
       <div class="flex items-center space-x-3">
-        <img src="logo.png" alt="DCIAFRICA Logo" class="h-12 w-12" loading="lazy" />
-        <span class="text-2xl font-bold gradient-text">DCIAFRICA</span>
+        <a href="index.html" class="flex items-center space-x-3">
+          <img src="logo.png" alt="DCIAFRICA Logo" class="h-12 w-12" loading="lazy" />
+          <span class="text-2xl font-bold gradient-text">DCIAFRICA</span>
+        </a>
       </div>
-      <nav class="hidden md:flex space-x-8 text-sm">
+      <nav class="hidden md:flex space-x-8 text-sm items-center">
         <a href="index.html#programs" class="hover:text-[#00b9ae] transition-colors duration-300">Programs</a>
+        <a href="https://edu.dciafrica.com.ng"
+          class="text-[#fbbf24] font-bold hover:text-[#00b9ae] transition-colors duration-300">Digital Learning Platform</a>
+        <a href="https://studio.dciafrica.com.ng/"
+          class="text-[#fbbf24] font-bold hover:text-[#00b9ae] transition-colors duration-300">AI Design Studio</a>
         <a href="index.html#volunteer" class="hover:text-[#00b9ae] transition-colors duration-300">Volunteer</a>
         <a href="index.html#impact" class="hover:text-[#00b9ae] transition-colors duration-300">Impact</a>
         <a href="index.html#contact" class="hover:text-[#00b9ae] transition-colors duration-300">Contact</a>
-        <a href="hosting.html" class="text-[#fbbf24] hover:text-[#e0a923] transition-colors duration-300">Start a Website</a>
+        <a href="hosting.html" class="text-[#fbbf24] hover:text-[#e0a923] font-semibold transition-colors duration-300">Web Agency</a>
       </nav>
-      <button class="md:hidden text-white focus:outline-none">
+      <button id="mobile-menu-btn" class="md:hidden text-white focus:outline-none">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
         </svg>
       </button>
     </header>
 
+    <!-- Mobile Navigation Menu -->
+    <div id="mobile-menu" class="hidden fixed inset-0 z-40 bg-[#0c1e59]/95 flex flex-col items-center justify-center space-y-6 text-lg font-semibold md:hidden">
+      <button id="mobile-close-btn" class="absolute top-6 right-6 text-white text-3xl">&times;</button>
+      <a href="index.html#programs" class="hover:text-[#00b9ae]">Programs</a>
+      <a href="https://edu.dciafrica.com.ng" class="text-[#fbbf24]">Digital Learning Platform</a>
+      <a href="https://studio.dciafrica.com.ng/" class="text-[#fbbf24]">AI Design Studio</a>
+      <a href="index.html#volunteer" class="hover:text-[#00b9ae]">Volunteer</a>
+      <a href="index.html#impact" class="hover:text-[#00b9ae]">Impact</a>
+      <a href="index.html#contact" class="hover:text-[#00b9ae]">Contact</a>
+      <a href="hosting.html" class="text-[#fbbf24]">Web Agency</a>
+    </div>
+
     <!-- Hero Section -->
-    <section class="relative py-32 px-6 bg-gradient-to-b from-[#0c1e59] to-[#0a183f] text-center">
-      <div class="max-w-4xl mx-auto">
-        <h1 class="text-4xl md:text-5xl font-bold mb-6">
-          <span class="gradient-text">Launch Your Website</span> with Our Trusted Partners
+    <section class="relative py-28 px-6 bg-gradient-to-b from-[#0c1e59] to-[#0a183f] text-center overflow-hidden">
+      <div class="absolute -top-40 -left-40 w-96 h-96 rounded-full bg-[#00b9ae]/10 blur-3xl"></div>
+      <div class="absolute -bottom-40 -right-40 w-96 h-96 rounded-full bg-[#fbbf24]/5 blur-3xl"></div>
+      
+      <div class="max-w-4xl mx-auto relative z-10">
+        <span class="inline-block px-4 py-1.5 rounded-full bg-brand/10 border border-brand/20 text-[#00b9ae] text-xs font-semibold uppercase tracking-wider mb-4">
+          Premium Web & Mobile Agency
+        </span>
+        <h1 class="text-4xl md:text-6xl font-bold leading-tight mb-6">
+          We Build High-End <span class="gradient-text">Websites & Mobile Apps</span>
         </h1>
-        <p class="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
-          Get exclusive discounts through DCIAFRICA and kickstart your online journey today
+        <p class="text-lg md:text-xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed">
+          From high-end fashion stores to secure enterprise and learning platforms, we engineer performance-driven digital solutions for startups, established companies, and individuals.
         </p>
-        <a
-          href="#hosting-partners"
-          class="inline-block bg-[#fbbf24] hover:bg-[#e0a923] text-[#0c1e59] font-semibold px-8 py-3 rounded-full transition-all duration-300 transform hover:scale-105"
-        >
-          View Hosting Options
-        </a>
+        <div class="flex flex-wrap justify-center gap-4">
+          <a
+            href="https://wa.me/2347042807707"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-2 bg-[#fbbf24] hover:bg-[#e0a923] text-[#0c1e59] font-bold px-8 py-4 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg shadow-[#fbbf24]/20"
+          >
+            <i class="fab fa-whatsapp text-lg"></i> Start a Project
+          </a>
+          <a
+            href="#portfolio"
+            class="inline-block border border-white/20 bg-white/5 hover:bg-white/10 text-white font-semibold px-8 py-4 rounded-full transition-all duration-300"
+          >
+            Explore Portfolio
+          </a>
+        </div>
       </div>
     </section>
 
-    <!-- Hosting Partners -->
-    <section id="hosting-partners" class="py-24 px-6 bg-white text-[#0c1e59]">
+    <!-- Services Overview -->
+    <section class="py-20 px-6 bg-[#0a183f]">
+      <div class="max-w-7xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="glass-card p-8 rounded-2xl border border-white/5">
+            <div class="text-4xl mb-4 text-[#00b9ae]"><i class="fas fa-laptop-code"></i></div>
+            <h3 class="font-bold text-xl mb-3">Custom Web Development</h3>
+            <p class="text-gray-300 text-sm leading-relaxed">Responsive platforms, sleek marketing pages, and scalable enterprise portals built using Tailwind CSS, React, and Next.js.</p>
+          </div>
+          <div class="glass-card p-8 rounded-2xl border border-white/5">
+            <div class="text-4xl mb-4 text-[#fbbf24]"><i class="fas fa-mobile-alt"></i></div>
+            <h3 class="font-bold text-xl mb-3">Mobile Applications</h3>
+            <p class="text-gray-300 text-sm leading-relaxed">Cross-platform iOS and Android apps built with React Native. Fluid native layouts, animations, and high performance.</p>
+          </div>
+          <div class="glass-card p-8 rounded-2xl border border-white/5">
+            <div class="text-4xl mb-4 text-[#00b9ae]"><i class="fas fa-shopping-bag"></i></div>
+            <h3 class="font-bold text-xl mb-3">E-Commerce & Portals</h3>
+            <p class="text-gray-300 text-sm leading-relaxed">Advanced digital commerce setups with payment gates, booking workflows, and complex dashboards for smooth user experiences.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Portfolio Projects -->
+    <section id="portfolio" class="py-24 px-6 bg-white text-[#0c1e59]">
       <div class="max-w-6xl mx-auto">
         <div class="text-center mb-16">
-          <h2 class="text-4xl font-bold mb-4">Our Recommended Hosting Partners</h2>
+          <h2 class="text-4xl font-bold mb-4">Our Featured Projects</h2>
           <p class="text-xl text-gray-700 max-w-2xl mx-auto">
-            Affordable, reliable options for beginners and professionals
+            A showcase of custom digital platforms and mobile interfaces built for our clients.
           </p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          <!-- Hostinger -->
-          <div class="hosting-card bg-[#f9fafb] p-8 rounded-xl shadow-lg hover:shadow-xl flex flex-col">
-            <div class="flex items-center mb-4">
-              <img src="https://cdn.brandfetch.io/hostinger.co/fallback/lettermark/theme/dark/h/256/w/256/icon?c=1bfwsmEH20zzEfSNTed" alt="Hostinger Logo" class="h-8 mr-3">
-              <span class="text-lg font-bold">🌍 Global</span>
+          <!-- Dowse Design -->
+          <div class="portfolio-card bg-[#f9fafb] rounded-2xl shadow-lg border border-gray-100 overflow-hidden flex flex-col h-full">
+            <div class="p-6">
+              <span class="inline-block px-3 py-1 rounded-full bg-[#00b9ae]/10 text-[#00b9ae] text-xs font-bold uppercase tracking-wider mb-3">Fashion & Lifestyle</span>
+              <h3 class="font-bold text-xl mb-2">Dowse Design</h3>
+              <p class="text-gray-600 text-sm mb-6 leading-relaxed">Premium online store displaying designer collections, lifestyle accessories, and bespoke fashion styling guides.</p>
             </div>
-            <p class="text-gray-600 mb-6">Premium hosting with 99.9% uptime, free domain, and 24/7 support. Perfect for international reach.</p>
-            <ul class="space-y-2 mb-6 text-gray-700">
-              <li class="flex items-center">
-                <i class="fas fa-check text-[#00b9ae] mr-2"></i> Free SSL Certificate
-              </li>
-              <li class="flex items-center">
-                <i class="fas fa-check text-[#00b9ae] mr-2"></i> Website Builder
-              </li>
-              <li class="flex items-center">
-                <i class="fas fa-check text-[#00b9ae] mr-2"></i> 30-Day Money Back
-              </li>
-            </ul>
-            <div class="mt-auto">
+            <div class="mt-auto p-6 pt-0">
               <a
-                href="https://hostinger.com?REFERRALCODE=1EMMA150"
+                href="https://dowsedesign.co.uk/"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="block w-full bg-[#fbbf24] hover:bg-[#e0a923] text-[#0c1e59] font-semibold py-3 px-4 rounded-lg text-center transition-colors duration-300"
+                class="inline-flex items-center gap-1.5 text-[#00b9ae] hover:text-[#00857a] font-bold text-sm"
               >
-                Start at $1.99/mo
+                Visit Site <i class="fas fa-arrow-up-right-from-square text-xs"></i>
               </a>
             </div>
           </div>
 
-          <!-- WhoGoHost -->
-          <div class="hosting-card bg-[#f9fafb] p-8 rounded-xl shadow-lg hover:shadow-xl flex flex-col">
-            <div class="flex items-center mb-4">
-              <img src="https://go54.com/logos/logo_1.svg" alt="WhoGoHost Logo" class="h-8 mr-3">
-              <span class="text-lg font-bold">🇳🇬 Nigeria</span>
+          <!-- Hiut Denim -->
+          <div class="portfolio-card bg-[#f9fafb] rounded-2xl shadow-lg border border-gray-100 overflow-hidden flex flex-col h-full">
+            <div class="p-6">
+              <span class="inline-block px-3 py-1 rounded-full bg-[#00b9ae]/10 text-[#00b9ae] text-xs font-bold uppercase tracking-wider mb-3">Fashion / E-Commerce</span>
+              <h3 class="font-bold text-xl mb-2">Hiut Denim</h3>
+              <p class="text-gray-600 text-sm mb-6 leading-relaxed">Bespoke denim apparel store with clean product grids, lookbooks, and high-fidelity cart transitions.</p>
             </div>
-            <p class="text-gray-600 mb-6">Leading Nigerian hosting provider with Naira payments and local support. Great for beginners.</p>
-            <ul class="space-y-2 mb-6 text-gray-700">
-              <li class="flex items-center">
-                <i class="fas fa-check text-[#00b9ae] mr-2"></i> .NG Domains
-              </li>
-              <li class="flex items-center">
-                <i class="fas fa-check text-[#00b9ae] mr-2"></i> Local Payment Options
-              </li>
-              <li class="flex items-center">
-                <i class="fas fa-check text-[#00b9ae] mr-2"></i> 24/7 Customer Support
-              </li>
-            </ul>
-            <div class="mt-auto">
+            <div class="mt-auto p-6 pt-0">
               <a
-                href="https://app.go54.com/signup?aff=emmao"
+                href="https://hiutdenim.co.uk/"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="block w-full bg-[#3d6f4c] hover:bg-[#2f5a3a] text-white font-semibold py-3 px-4 rounded-lg text-center transition-colors duration-300"
+                class="inline-flex items-center gap-1.5 text-[#00b9ae] hover:text-[#00857a] font-bold text-sm"
               >
-                Start at ₦1,500/mo
+                Visit Site <i class="fas fa-arrow-up-right-from-square text-xs"></i>
               </a>
             </div>
           </div>
 
-          <!-- Bluehost -->
-          <div class="hosting-card bg-[#f9fafb] p-8 rounded-xl shadow-lg hover:shadow-xl flex flex-col">
-            <div class="flex items-center mb-4">
-              <img src="https://i.pcmag.com/imagery/reviews/01oj8G1uU7UzNEnK0EypaxL-9..v1569481543.jpg" alt="Bluehost Logo" class="h-8 mr-3">
-              <span class="text-lg font-bold">🌐 WordPress</span>
+          <!-- IV Therapy -->
+          <div class="portfolio-card bg-[#f9fafb] rounded-2xl shadow-lg border border-gray-100 overflow-hidden flex flex-col h-full">
+            <div class="p-6">
+              <span class="inline-block px-3 py-1 rounded-full bg-[#fbbf24]/10 text-[#c69315] text-xs font-bold uppercase tracking-wider mb-3">Healthcare & Wellness</span>
+              <h3 class="font-bold text-xl mb-2">IV Therapy</h3>
+              <p class="text-gray-600 text-sm mb-6 leading-relaxed">Sleek clinical booking and consulting portal displaying intravenous treatment options and schedules.</p>
             </div>
-            <p class="text-gray-600 mb-6">Officially recommended by WordPress with 1-click installs and managed hosting.</p>
-            <ul class="space-y-2 mb-6 text-gray-700">
-              <li class="flex items-center">
-                <i class="fas fa-check text-[#00b9ae] mr-2"></i> Free Domain 1st Year
-              </li>
-              <li class="flex items-center">
-                <i class="fas fa-check text-[#00b9ae] mr-2"></i> Automatic Updates
-              </li>
-              <li class="flex items-center">
-                <i class="fas fa-check text-[#00b9ae] mr-2"></i> Staging Environment
-              </li>
-            </ul>
-            <div class="mt-auto">
-              <button
-              disabled
+            <div class="mt-auto p-6 pt-0">
+              <a
+                href="https://iv-l1jj.onrender.com/"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="w-full"
+                class="inline-flex items-center gap-1.5 text-[#00b9ae] hover:text-[#00857a] font-bold text-sm"
               >
-                Coming Soon
-              </button>
+                Visit Site <i class="fas fa-arrow-up-right-from-square text-xs"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Classroom App -->
+          <div class="portfolio-card bg-[#f9fafb] rounded-2xl shadow-lg border border-gray-100 overflow-hidden flex flex-col h-full">
+            <div class="p-6">
+              <span class="inline-block px-3 py-1 rounded-full bg-[#00b9ae]/10 text-[#00b9ae] text-xs font-bold uppercase tracking-wider mb-3">Educational Platform</span>
+              <h3 class="font-bold text-xl mb-2">GP DSA Classroom</h3>
+              <p class="text-gray-600 text-sm mb-6 leading-relaxed">Comprehensive LMS dashboard featuring grading grids, announcements, and assignment managers.</p>
+            </div>
+            <div class="mt-auto p-6 pt-0">
+              <a
+                href="https://gpdsa.wapcpharm.org/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-1.5 text-[#00b9ae] hover:text-[#00857a] font-bold text-sm"
+              >
+                Visit Site <i class="fas fa-arrow-up-right-from-square text-xs"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Chirp Chat App -->
+          <div class="portfolio-card bg-[#f9fafb] rounded-2xl shadow-lg border border-gray-100 overflow-hidden flex flex-col h-full">
+            <div class="p-6">
+              <span class="inline-block px-3 py-1 rounded-full bg-[#fbbf24]/10 text-[#c69315] text-xs font-bold uppercase tracking-wider mb-3">Real-time Workspace</span>
+              <h3 class="font-bold text-xl mb-2">Chirp Chat App</h3>
+              <p class="text-gray-600 text-sm mb-6 leading-relaxed">Real-time team chat interface with secure authentication, direct messaging, channels, and responsive layouts.</p>
+            </div>
+            <div class="mt-auto p-6 pt-0">
+              <a
+                href="http://129.213.159.25:3200/sign-in"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-1.5 text-[#00b9ae] hover:text-[#00857a] font-bold text-sm"
+              >
+                Visit Site <i class="fas fa-arrow-up-right-from-square text-xs"></i>
+              </a>
+            </div>
+          </div>
+
+          <!-- Eric Tino -->
+          <div class="portfolio-card bg-[#f9fafb] rounded-2xl shadow-lg border border-gray-100 overflow-hidden flex flex-col h-full">
+            <div class="p-6">
+              <span class="inline-block px-3 py-1 rounded-full bg-[#00b9ae]/10 text-[#00b9ae] text-xs font-bold uppercase tracking-wider mb-3">Consulting Services</span>
+              <h3 class="font-bold text-xl mb-2">Eric Tino Consultant</h3>
+              <p class="text-gray-600 text-sm mb-6 leading-relaxed">Clean landing and booking workflow displaying education consulting models and contact vectors.</p>
+            </div>
+            <div class="mt-auto p-6 pt-0">
+              <a
+                href="https://www.erictino.co.uk/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-1.5 text-[#00b9ae] hover:text-[#00857a] font-bold text-sm"
+              >
+                Visit Site <i class="fas fa-arrow-up-right-from-square text-xs"></i>
+              </a>
             </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Why Host With Us -->
-    <section class="py-20 px-6 bg-gradient-to-b from-[#0a183f] to-[#0c1e59]">
-      <div class="max-w-4xl mx-auto text-center">
-        <h2 class="text-3xl font-bold mb-6 text-[#fbbf24]">Why Use Our Hosting Partners?</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
-          <div class="bg-[#3d6f4c]/30 p-6 rounded-xl backdrop-blur-sm border border-[#3d6f4c]/30">
-            <div class="text-4xl mb-4 text-[#00b9ae]">💸</div>
-            <h3 class="font-semibold text-lg mb-2">Exclusive Discounts</h3>
-            <p class="text-gray-300">Special rates only available through DCIAFRICA</p>
-          </div>
-          <div class="bg-[#3d6f4c]/30 p-6 rounded-xl backdrop-blur-sm border border-[#3d6f4c]/30">
-            <div class="text-4xl mb-4 text-[#fbbf24]">🛠️</div>
-            <h3 class="font-semibold text-lg mb-2">Beginner-Friendly</h3>
-            <p class="text-gray-300">Easy setup perfect for our students</p>
-          </div>
-          <div class="bg-[#3d6f4c]/30 p-6 rounded-xl backdrop-blur-sm border border-[#3d6f4c]/30">
-            <div class="text-4xl mb-4 text-white">🤝</div>
-            <h3 class="font-semibold text-lg mb-2">Supports Our Mission</h3>
-            <p class="text-gray-300">Commissions help fund our free programs</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CTA Section -->
+    <!-- Call to Action Section -->
     <section class="py-24 px-6 bg-gradient-to-r from-[#00b9ae] to-[#0c8a82] text-center">
       <div class="max-w-3xl mx-auto">
-        <h2 class="text-3xl md:text-4xl font-bold mb-6">Need Help Choosing?</h2>
-        <p class="text-xl mb-8">Our team can guide you to the best hosting solution for your needs.</p>
+        <span class="text-[#fbbf24] font-bold tracking-widest text-xs uppercase block mb-2">Let's Work Together</span>
+        <h2 class="text-3xl md:text-5xl font-bold mb-6">Have a Project Idea?</h2>
+        <p class="text-lg md:text-xl mb-8 opacity-90">Let's discuss how we can build a state-of-the-art website or application to empower your company or personal brand.</p>
         <a
-          href="index.html#contact"
-          class="inline-block bg-[#fbbf24] hover:bg-[#e0a923] text-[#0c1e59] font-semibold px-8 py-4 rounded-full transition-all duration-300 transform hover:scale-105"
+          href="https://wa.me/2347042807707"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center gap-2 bg-[#fbbf24] hover:bg-[#e0a923] text-[#0c1e59] font-bold px-10 py-4 rounded-full transition-all duration-300 transform hover:scale-105 shadow-xl shadow-black/10"
         >
-          Contact Our Support
+          <i class="fab fa-whatsapp text-xl animate-bounce"></i> Chat on WhatsApp (07042807707)
         </a>
       </div>
     </section>
@@ -250,7 +320,7 @@
             <img src="logo.png" alt="DCIAFRICA Logo" class="h-10 w-10" loading="lazy" />
             <span class="text-xl font-bold gradient-text">DCIAFRICA</span>
           </div>
-          <p class="text-gray-300">Empowering African youth with free digital skills for the 21st century.</p>
+          <p class="text-gray-300">Empowering African youth with free digital skills training and software development services.</p>
         </div>
         
         <div>
@@ -263,11 +333,11 @@
         </div>
         
         <div>
-          <h3 class="text-lg font-semibold mb-4">Hosting</h3>
+          <h3 class="text-lg font-semibold mb-4">Agency Services</h3>
           <ul class="space-y-2">
-            <li><a href="#" class="text-gray-300 hover:text-[#00b9ae] transition-colors">Web Hosting</a></li>
-            <li><a href="#" class="text-gray-300 hover:text-[#00b9ae] transition-colors">Domain Registration</a></li>
-            <li><a href="#" class="text-gray-300 hover:text-[#00b9ae] transition-colors">Website Builder</a></li>
+            <li><a href="https://wa.me/2347042807707" target="_blank" rel="noopener noreferrer" class="text-gray-300 hover:text-[#00b9ae] transition-colors">Web Development</a></li>
+            <li><a href="https://wa.me/2347042807707" target="_blank" rel="noopener noreferrer" class="text-gray-300 hover:text-[#00b9ae] transition-colors">Mobile Applications</a></li>
+            <li><a href="https://wa.me/2347042807707" target="_blank" rel="noopener noreferrer" class="text-gray-300 hover:text-[#00b9ae] transition-colors">E-Commerce Portals</a></li>
           </ul>
         </div>
         
@@ -276,13 +346,12 @@
           <ul class="space-y-2">
             <li><a href="#" class="text-gray-300 hover:text-[#00b9ae] transition-colors">Privacy Policy</a></li>
             <li><a href="#" class="text-gray-300 hover:text-[#00b9ae] transition-colors">Terms of Service</a></li>
-            <li><a href="#" class="text-gray-300 hover:text-[#00b9ae] transition-colors">Affiliate Disclosure</a></li>
           </ul>
         </div>
       </div>
       
       <div class="max-w-7xl mx-auto pt-8 mt-8 border-t border-[#3d6f4c]/30 text-center text-gray-400">
-        <p>&copy; 2025 Digital Connect Institute Africa (DCIAFRICA). All rights reserved.</p>
+        <p>&copy; 2026 Digital Connect Institute Africa (DCIAFRICA). All rights reserved.</p>
       </div>
     </footer>
 
@@ -294,6 +363,19 @@
     </button>
 
     <script>
+      // Navigation toggle logic
+      const menuBtn = document.getElementById('mobile-menu-btn');
+      const closeBtn = document.getElementById('mobile-close-btn');
+      const mobileMenu = document.getElementById('mobile-menu');
+
+      menuBtn.addEventListener('click', () => {
+        mobileMenu.classList.remove('hidden');
+      });
+
+      closeBtn.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+      });
+
       // Back to top button functionality
       const backToTopButton = document.getElementById('back-to-top');
       
