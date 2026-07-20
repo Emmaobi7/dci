@@ -161,11 +161,56 @@
     .lightbox-close {
       position: absolute;
       top: 20px;
-      right: 20px;
+      right: 25px;
       color: white;
       font-size: 40px;
       cursor: pointer;
-      z-index: 101;
+      z-index: 220;
+      line-height: 1;
+    }
+
+    .lightbox-nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      font-size: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      z-index: 210;
+      user-select: none;
+    }
+
+    .lightbox-nav-btn:hover {
+      background: #00b9ae;
+      border-color: #00b9ae;
+      transform: translateY(-50%) scale(1.1);
+    }
+
+    #lightbox-prev {
+      left: 20px;
+    }
+
+    #lightbox-next {
+      right: 20px;
+    }
+
+    @media (max-width: 640px) {
+      .lightbox-nav-btn {
+        width: 38px;
+        height: 38px;
+        font-size: 22px;
+      }
+      #lightbox-prev { left: 8px; }
+      #lightbox-next { right: 8px; }
     }
 
     /* Full Gallery Modal */
@@ -217,7 +262,7 @@
     .hero-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to bottom, rgba(12, 30, 89, 0.9), rgba(10, 24, 63, 0.95));
+      background: linear-gradient(to bottom, rgba(12, 30, 89, 0.55), rgba(10, 24, 63, 0.72));
       z-index: 0;
     }
   </style>
@@ -227,10 +272,10 @@
   <!-- Header -->
   <header
     class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center sticky top-0 z-50 bg-[#0c1e59]/90 backdrop-blur-sm">
-    <div class="flex items-center space-x-3">
+    <a href="#hero" class="flex items-center space-x-3 hover:opacity-90 transition-opacity">
       <img src="logo.png" alt="DCIAFRICA Logo" class="h-12 w-12" loading="lazy" />
       <span class="text-2xl font-bold gradient-text">DCIAFRICA</span>
-    </div>
+    </a>
     <nav class="hidden md:flex space-x-8 text-sm">
       <a href="#programs" class="hover:text-[#00b9ae] transition-colors duration-300">Programs</a>
       <a href="https://edu.dciafrica.com.ng"
@@ -266,7 +311,7 @@
   </div>
 
   <!-- Hero -->
-  <section class=" relative text-center py-32 px-6 overflow-hidden min-h-[80vh] flex items-center justify-center">
+  <section id="hero" class="relative text-center py-32 px-6 overflow-hidden min-h-[80vh] flex items-center justify-center">
     <!-- Background Slider -->
     <div id="hero-bg-slider">
       <!-- Slides will be injected by JS -->
@@ -294,14 +339,6 @@
         <a href="https://studio.dciafrica.com.ng/"
           class="inline-block bg-[#fbbf24] hover:bg-[#e0a923] text-[#0c1e59] font-bold px-8 py-4 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg shadow-[#fbbf24]/20">
           AI Design Studio
-        </a>
-        <a href="#programs"
-          class="inline-block bg-[#fbbf24] hover:bg-[#e0a923] text-[#0c1e59] font-semibold px-8 py-4 rounded-full transition-all duration-300 transform hover:scale-105">
-          Explore Programs
-        </a>
-        <a href="#contact"
-          class="inline-block border-2 border-[#00b9ae] hover:bg-[#00b9ae]/20 text-white font-semibold px-8 py-4 rounded-full transition-all duration-300 transform hover:scale-105">
-          Join Our Community
         </a>
       </div>
     </div>
@@ -406,7 +443,7 @@
 
       <button id="view-all-btn"
         class="mt-12 inline-block bg-[#00b9ae] hover:bg-[#00857a] text-white font-bold px-10 py-4 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg">
-        View All Training Highlights (46 Photos)
+        View All Training Highlights (55 Photos)
       </button>
     </div>
   </section>
@@ -417,7 +454,7 @@
     <div class="modal-content text-center">
       <h2 class="text-3xl font-bold mb-10 text-white">All Training Highlights</h2>
       <div id="full-gallery-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        <!-- All 46 images injected here -->
+        <!-- All 55 images injected here -->
       </div>
     </div>
   </div>
@@ -425,7 +462,10 @@
   <!-- Lightbox Modal -->
   <div id="lightbox">
     <span class="lightbox-close">&times;</span>
+    <button id="lightbox-prev" class="lightbox-nav-btn" aria-label="Previous photo">&lsaquo;</button>
     <img id="lightbox-img" src="" alt="Full view" />
+    <button id="lightbox-next" class="lightbox-nav-btn" aria-label="Next photo">&rsaquo;</button>
+    <div id="lightbox-counter" class="text-xs text-gray-300 mt-3 font-mono"></div>
   </div>
 
   <!-- Impact Section -->
@@ -499,8 +539,8 @@
 
           <div>
             <h3 class="font-semibold text-lg mb-2">✉️ Email:</h3>
-            <a href="mailto:info@dciafrica.org"
-              class="text-[#00b9ae] hover:underline block text-lg">info@dciafrica.org</a>
+            <a href="mailto:info@dciafrica.com.ng"
+              class="text-[#00b9ae] hover:underline block text-lg">info@dciafrica.com.ng</a>
           </div>
         </div>
       </div>
@@ -661,6 +701,15 @@
 
     // Gallery and Lightbox Functionality
     const galleryImages = [
+      "ioe.jpeg",
+      "WhatsApp Image 2026-07-20 at 12.55.45 PM.jpeg",
+      "WhatsApp Image 2026-07-20 at 12.55.46 PM.jpeg",
+      "WhatsApp Image 2026-07-20 at 12.55.47 PM.jpeg",
+      "WhatsApp Image 2026-07-20 at 12.55.48 PM (1).jpeg",
+      "WhatsApp Image 2026-07-20 at 12.55.48 PM.jpeg",
+      "WhatsApp Image 2026-07-20 at 12.55.49 PM (1).jpeg",
+      "WhatsApp Image 2026-07-20 at 12.55.49 PM.jpeg",
+      "WhatsApp Image 2026-07-20 at 12.55.50 PM.jpeg",
       "WhatsApp Image 2026-03-07 at 1.53.47 PM (1).jpeg",
       "WhatsApp Image 2026-03-07 at 1.53.47 PM.jpeg",
       "WhatsApp Image 2026-03-07 at 1.53.48 PM.jpeg",
@@ -717,8 +766,34 @@
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightbox-img');
     const lightboxClose = document.querySelector('.lightbox-close');
+    const lightboxPrev = document.getElementById('lightbox-prev');
+    const lightboxNext = document.getElementById('lightbox-next');
+    const lightboxCounter = document.getElementById('lightbox-counter');
 
-    function createImageItem(imgName, isPriority = false) {
+    let currentLightboxIndex = 0;
+
+    function openLightbox(index) {
+      currentLightboxIndex = index;
+      const imgName = galleryImages[currentLightboxIndex];
+      lightboxImg.src = `images/${encodeURIComponent(imgName)}`;
+      if (lightboxCounter) {
+        lightboxCounter.textContent = `${currentLightboxIndex + 1} / ${galleryImages.length}`;
+      }
+      lightbox.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function showPrevImage() {
+      currentLightboxIndex = (currentLightboxIndex - 1 + galleryImages.length) % galleryImages.length;
+      openLightbox(currentLightboxIndex);
+    }
+
+    function showNextImage() {
+      currentLightboxIndex = (currentLightboxIndex + 1) % galleryImages.length;
+      openLightbox(currentLightboxIndex);
+    }
+
+    function createImageItem(imgName, isPriority = false, index = 0) {
       const item = document.createElement('div');
       item.className = 'gallery-item rounded-xl bg-white shadow-md aspect-video';
       item.innerHTML = `
@@ -728,24 +803,22 @@
                ${isPriority ? '' : 'loading="lazy"'} />
         `;
       item.addEventListener('click', () => {
-        lightboxImg.src = `images/${encodeURIComponent(imgName)}`;
-        lightbox.style.display = 'flex';
-        document.body.style.overflow = 'hidden';
+        openLightbox(index);
       });
       return item;
     }
 
     // Populate Main Grid (Top 6)
     if (galleryGrid) {
-      galleryImages.slice(0, 6).forEach(img => {
-        galleryGrid.appendChild(createImageItem(img, true));
+      galleryImages.slice(0, 6).forEach((img, idx) => {
+        galleryGrid.appendChild(createImageItem(img, true, idx));
       });
     }
 
     // Populate Full Modal Grid (All)
     if (fullGrid) {
-      galleryImages.forEach(img => {
-        fullGrid.appendChild(createImageItem(img));
+      galleryImages.forEach((img, idx) => {
+        fullGrid.appendChild(createImageItem(img, false, idx));
       });
     }
 
@@ -773,6 +846,42 @@
       }
     }
 
+    if (lightboxPrev) lightboxPrev.addEventListener('click', (e) => { e.stopPropagation(); showPrevImage(); });
+    if (lightboxNext) lightboxNext.addEventListener('click', (e) => { e.stopPropagation(); showNextImage(); });
+
+    // Keyboard Arrow Keys & Escape Navigation
+    document.addEventListener('keydown', (e) => {
+      if (lightbox && lightbox.style.display === 'flex') {
+        if (e.key === 'ArrowLeft') showPrevImage();
+        if (e.key === 'ArrowRight') showNextImage();
+        if (e.key === 'Escape') closeLightbox();
+      }
+    });
+
+    // Mobile Touch Swiping Support
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    if (lightbox) {
+      lightbox.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
+
+      lightbox.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+      }, { passive: true });
+    }
+
+    function handleSwipe() {
+      const threshold = 40;
+      if (touchEndX < touchStartX - threshold) {
+        showNextImage();
+      } else if (touchEndX > touchStartX + threshold) {
+        showPrevImage();
+      }
+    }
+
     if (lightboxClose) {
       lightboxClose.addEventListener('click', closeLightbox);
       lightbox.addEventListener('click', (e) => {
@@ -783,14 +892,14 @@
     // Hero Background Slider Logic
     const heroSlider = document.getElementById('hero-bg-slider');
     const heroImages = [
-      galleryImages[0], // WhatsApp Image 2026-03-07 at 1.53.47 PM (1).jpeg
-      galleryImages[2], // WhatsApp Image 2026-03-07 at 1.53.48 PM.jpeg
-      galleryImages[10], // WhatsApp Image 2026-03-07 at 1.57.17 PM (1).jpeg
-      galleryImages[15], // WhatsApp Image 2026-03-07 at 1.57.20 PM.jpeg
-      galleryImages[22], // WhatsApp Image 2026-03-07 at 1.57.24 PM.jpeg
-      galleryImages[28], // WhatsApp Image 2026-03-07 at 1.57.27 PM.jpeg
-      galleryImages[40], // WhatsApp Image 2026-03-07 at 1.59.46 PM (2).jpeg
-      galleryImages[45]  // WhatsApp Image 2026-03-07 at 1.59.49 PM.jpeg
+      galleryImages[0], // ioe.jpeg
+      galleryImages[1], // WhatsApp Image 2026-07-20 at 12.55.45 PM.jpeg
+      galleryImages[4], // WhatsApp Image 2026-07-20 at 12.55.48 PM (1).jpeg
+      galleryImages[10], // WhatsApp Image 2026-03-07 at 1.53.47 PM (1).jpeg
+      galleryImages[18], // WhatsApp Image 2026-03-07 at 1.57.16 PM.jpeg
+      galleryImages[26], // WhatsApp Image 2026-03-07 at 1.57.21 PM.jpeg
+      galleryImages[36], // WhatsApp Image 2026-03-07 at 1.57.26 PM (2).jpeg
+      galleryImages[48]  // WhatsApp Image 2026-03-07 at 1.59.46 PM (2).jpeg
     ];
 
     if (heroSlider) {
